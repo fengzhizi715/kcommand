@@ -3,7 +3,6 @@ package cn.netdiscovery.command
 import cn.netdiscovery.command.domain.CommandResult
 import cn.netdiscovery.command.domain.CommandStatus
 import java.util.*
-import java.util.Map
 import java.util.concurrent.Executors
 import java.util.stream.Collectors
 
@@ -13,7 +12,7 @@ import java.util.stream.Collectors
 class CommandManagerImpl : CommandManager {
 
     private val taskScheduler = Executors.newFixedThreadPool(10)
-    private val command = Command.instance
+    private val command = BaseCommand.instance
     private val commandStatuses = LinkedHashMap<String, CommandStatus>()
 
     private fun doExec(command: String, sync: Boolean, callback: OutputCallback?=null): Any {

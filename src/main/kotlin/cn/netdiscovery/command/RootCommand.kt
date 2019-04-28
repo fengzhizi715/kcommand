@@ -9,7 +9,7 @@ open class RootCommand(
     private val rootCommand: String,
     private val defaultDirection: String?=null,
     private val defaultTimeout: Int
-) : Command() {
+) : BaseCommand() {
 
     override fun exec(commands: String): CommandResult {
         return execute(rootCommand, commands, defaultDirection, defaultTimeout, null)
