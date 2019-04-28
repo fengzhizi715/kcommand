@@ -102,7 +102,7 @@ abstract class BaseCommand : Command {
     companion object {
 
         @Volatile
-        private lateinit var INSTANCE: Command
+        private var INSTANCE: Command?=null
 
         val instance: Command
             get() {
@@ -118,7 +118,7 @@ abstract class BaseCommand : Command {
                         }
                     }
                 }
-                return INSTANCE
+                return INSTANCE!!
             }
     }
 }
