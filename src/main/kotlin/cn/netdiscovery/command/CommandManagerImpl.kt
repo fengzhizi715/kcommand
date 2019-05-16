@@ -34,30 +34,19 @@ class CommandManagerImpl : CommandManager {
         return result
     }
 
-    override fun exec(command: String): CommandStatus {
-        return doExec(command, true, null) as CommandStatus
-    }
+    override fun exec(command: String) = doExec(command, true, null) as CommandStatus
 
-    override fun exec(command: String, callback: OutputCallback): String {
-        return doExec(command, false, callback) as String
-    }
+    override fun exec(command: String, callback: OutputCallback) = doExec(command, false, callback) as String
 
-    override fun get(): List<CommandStatus> {
-        return ArrayList(commandStatuses.values)
-    }
+    override fun get() = ArrayList(commandStatuses.values)
 
-    override fun get(uuid: String): Optional<CommandStatus> {
-        return Optional.ofNullable(commandStatuses[uuid])
-    }
+    override fun get(uuid: String): Optional<CommandStatus> = Optional.ofNullable(commandStatuses[uuid])
 
-    override fun get(uuids: Set<String>): List<CommandStatus> {
-
-        return commandStatuses.entries
-            .stream()
-            .filter { stringCommandStatusEntry -> uuids.contains(stringCommandStatusEntry.key) }
-            .map{it.value}
-            .collect(Collectors.toList<CommandStatus>());
-    }
+    override fun get(uuids: Set<String>) = commandStatuses.entries
+        .stream()
+        .filter { stringCommandStatusEntry -> uuids.contains(stringCommandStatusEntry.key) }
+        .map{it.value}
+        .collect(Collectors.toList<CommandStatus>())
 
     private inner class CommandRunnable internal constructor(
         private val commandStatus: CommandStatus,
