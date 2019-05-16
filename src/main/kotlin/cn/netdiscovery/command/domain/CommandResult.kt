@@ -12,8 +12,6 @@ data class CommandResult(
 
     companion object {
 
-        fun empty(): CommandResult {
-            return CommandResult()
-        }
+        fun empty() = CommandResult()
     }
 }
