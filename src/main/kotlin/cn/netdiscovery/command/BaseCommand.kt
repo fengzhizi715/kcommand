@@ -14,13 +14,12 @@ abstract class BaseCommand : Command {
     @Throws(IOException::class)
     private fun getString(stream: InputStream, commandResult: CommandResult?, outputCallback: OutputCallback?): String {
 
-        var reader: BufferedReader? = null
-        try {
-            reader = BufferedReader(InputStreamReader(stream))
+        BufferedReader(InputStreamReader(stream)).use {
+
             var line: String? = null
             val stringBuilder = StringBuilder()
             val lineSeparator = System.getProperty("line.separator")
-            while ({ line = reader.readLine(); line }() != null) {
+            while ({ line = it.readLine(); line }() != null) {
                 stringBuilder
                     .append(line)
                     .append(lineSeparator)
@@ -31,8 +30,6 @@ abstract class BaseCommand : Command {
             }
 
             return stringBuilder.toString()
-        } finally {
-            IOUtils.closeQuietly(reader)
         }
     }
 
