@@ -99,17 +99,11 @@ class CommandBuilder() {
 
     private class CommandImpl(private val cmdLine: String, private val executableCmd: Array<String>) : Command {
 
-        override fun executable(): Array<String> {
-            return executableCmd
-        }
+        override fun executable(): List<String> = executableCmd.asList()
 
-        override fun string(): String {
-            return cmdLine
-        }
+        override fun string(): String = cmdLine
 
-        override fun toString(): String {
-            return string()
-        }
+        override fun toString(): String = string()
     }
 
     companion object {

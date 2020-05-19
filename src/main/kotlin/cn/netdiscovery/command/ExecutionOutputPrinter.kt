@@ -19,15 +19,15 @@ class ExecutionOutputPrinter(private val appender: Appender) {
         return appender
     }
 
-    fun handleStdStream(stdInputStream: InputStream?) {
+    fun handleStdStream(stdInputStream: InputStream) {
         formatStream(stdInputStream, false)
     }
 
-    fun handleErrStream(errorStream: InputStream?) {
+    fun handleErrStream(errorStream: InputStream) {
         formatStream(errorStream, true)
     }
 
-    protected fun formatStream(inputStream: InputStream?, isError: Boolean) {
+    private fun formatStream(inputStream: InputStream, isError: Boolean) {
         try {
             BufferedReader(InputStreamReader(inputStream)).use { br ->
                 var line: String? = null
