@@ -10,7 +10,7 @@ package cn.netdiscovery.command
  */
 interface Command {
 
-    fun executable(): Array<String>
+    fun executable(): List<String>
 
     fun string(): String
 }
