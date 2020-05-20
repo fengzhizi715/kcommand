@@ -124,6 +124,11 @@ class CommandBuilder() {
 
         fun buildRawCommand(cmdLine: String): Command = CommandImpl(cmdLine, splitCmd(cmdLine))
 
+        fun buildRawCommand(cmdBlock: ()->String): Command {
+            val cmdLine = cmdBlock.invoke()
+            return CommandImpl(cmdLine, splitCmd(cmdLine))
+        }
+
         fun buildRawCommand(cmdLine: String, cmdArray: Array<String>): Command = CommandImpl(cmdLine, cmdArray)
     }
 }

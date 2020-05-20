@@ -20,13 +20,20 @@ object CommandExecutor {
     private var WORKERS = Executors.newFixedThreadPool(2)
     internal val NEW_LINE = System.getProperty("line.separator")
 
+    @JvmStatic
     fun setExecutors(executorService: ExecutorService) {
         this.WORKERS = executorService
     }
 
+    @JvmStatic
     @Throws(UnrecognisedCmdException::class)
     fun execute(cmdLine: String): ProcessMonitor = execute(CommandBuilder.buildRawCommand(cmdLine), null )
 
+    @JvmStatic
+    @Throws(UnrecognisedCmdException::class)
+    fun execute(cmdLine: String, appender: Appender): ProcessMonitor = execute(CommandBuilder.buildRawCommand(cmdLine), null, ExecutionOutputPrinter(appender))
+
+    @JvmStatic
     @Throws(UnrecognisedCmdException::class)
     fun execute(cmd: Command, directory: File?=null, outputPrinter: ExecutionOutputPrinter = ExecutionOutputPrinter.DEFAULT_OUTPUT_PRINTER): ProcessMonitor {
         val p = executeCommand(cmd, directory)

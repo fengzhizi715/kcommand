@@ -29,7 +29,8 @@ class ExecutionOutputPrinter(private val appender: Appender) {
         try {
             BufferedReader(InputStreamReader(inputStream)).use { br ->
                 var line: String? = null
-                while (br.readLine().also { line = it } != null) showOutputLine(line!!, isError)
+                while (br.readLine().also { line = it } != null)
+                    showOutputLine(line!!, isError)
             }
         } catch (e: IOException) {
             showOutputLine(e.fillInStackTrace().toString() + CommandExecutor.NEW_LINE, true)
