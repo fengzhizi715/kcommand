@@ -1,5 +1,8 @@
 package cn.netdiscovery.command
 
+import cn.netdiscovery.command.fuction.Result
+import cn.netdiscovery.command.fuction.resultFrom
+import java.lang.Exception
 import java.util.concurrent.ExecutionException
 import java.util.concurrent.Future
 
@@ -39,5 +42,9 @@ class ProcessResult(
         } catch (e: ExecutionException) {
         }
         return result
+    }
+
+    fun getResult():Result<ExecutionResult,Exception> = resultFrom {
+        futureResult.get()
     }
 }
