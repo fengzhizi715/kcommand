@@ -25,10 +25,10 @@ object CommandExecutor {
     }
 
     @Throws(UnrecognisedCmdException::class)
-    fun execute(cmdLine: String): ProcessMonitor = execute(CommandBuilder.buildRawCommand(cmdLine), null, ExecutionOutputPrinter.DEFAULT_OUTPUT_PRINTER)
+    fun execute(cmdLine: String): ProcessMonitor = execute(CommandBuilder.buildRawCommand(cmdLine), null )
 
     @Throws(UnrecognisedCmdException::class)
-    fun execute(cmd: Command, directory: File?=null, outputPrinter: ExecutionOutputPrinter): ProcessMonitor {
+    fun execute(cmd: Command, directory: File?=null, outputPrinter: ExecutionOutputPrinter = ExecutionOutputPrinter.DEFAULT_OUTPUT_PRINTER): ProcessMonitor {
         val p = executeCommand(cmd, directory)
         recordOutput(p, outputPrinter)
         val futureReport = WORKERS.submit(ExecutionCallable(p, cmd))

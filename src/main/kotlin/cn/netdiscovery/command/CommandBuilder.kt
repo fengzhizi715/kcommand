@@ -73,12 +73,12 @@ class CommandBuilder() {
         return CommandImpl(executableCmdLine, executableCmd)
     }
 
-    private fun finalCmdList(): ArrayList<String> {
-        finalCommand.clear()
-        finalCommand.add(commandLine)
-        finalCommand.addAll(cmdOptions)
-        finalCommand.addAll(cmdArgs)
-        return finalCommand
+    private fun finalCmdList(): ArrayList<String> = finalCommand.apply {
+
+        clear()
+        add(commandLine)
+        addAll(cmdOptions)
+        addAll(cmdArgs)
     }
 
     private fun finalCmdLine(cmdList: ArrayList<String>): String {
@@ -116,10 +116,7 @@ class CommandBuilder() {
             val m = QUOTES_PATTERN.matcher(cmd)
             while (m.find()) {
                 var token = m.group(1)
-                token = if (token.startsWith("'") || token.startsWith("\"")) token.replace(
-                    "'",
-                    EMPTY_STRING
-                ).replace("\"", EMPTY_STRING) else token
+                token = if (token.startsWith("'") || token.startsWith("\"")) token.replace("'", EMPTY_STRING).replace("\"", EMPTY_STRING) else token
                 strings.add(token)
             }
             return strings.toTypedArray()
@@ -127,6 +124,6 @@ class CommandBuilder() {
 
         fun buildRawCommand(cmdLine: String): Command = CommandImpl(cmdLine, splitCmd(cmdLine))
 
-        fun buildRawCommand(cmdLine: String, cmds: Array<String>): Command = CommandImpl(cmdLine, cmds)
+        fun buildRawCommand(cmdLine: String, cmdArray: Array<String>): Command = CommandImpl(cmdLine, cmdArray)
     }
 }

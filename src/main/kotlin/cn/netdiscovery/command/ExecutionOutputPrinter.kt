@@ -43,7 +43,7 @@ class ExecutionOutputPrinter(private val appender: Appender) {
     companion object {
 
         /**
-         * will pass the output directly to System.out .
+         * 默认输出的 Printer
          */
         val DEFAULT_OUTPUT_PRINTER = ExecutionOutputPrinter(object : Appender {
 
