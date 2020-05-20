@@ -17,7 +17,7 @@ fun main() {
     list.add("-c")
     list.add("ps aux | grep java")
 
-    val cmd = CommandBuilder.buildRawCommand2("ps aux | grep java", list.toTypedArray())
+    val cmd = CommandBuilder.buildRawCommand("ps aux | grep java", list.toTypedArray())
 
     val eop = ExecutionOutputPrinter(object : Appender {
 

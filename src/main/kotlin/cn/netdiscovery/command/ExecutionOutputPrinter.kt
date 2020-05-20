@@ -15,9 +15,7 @@ import java.io.InputStreamReader
  */
 class ExecutionOutputPrinter(private val appender: Appender) {
 
-    fun getAppender(): Appender {
-        return appender
-    }
+    fun getAppender(): Appender = appender
 
     fun handleStdStream(stdInputStream: InputStream) {
         formatStream(stdInputStream, false)
@@ -31,15 +29,15 @@ class ExecutionOutputPrinter(private val appender: Appender) {
         try {
             BufferedReader(InputStreamReader(inputStream)).use { br ->
                 var line: String? = null
-                while (br.readLine().also { line = it } != null) showOutputLine(line, isError)
+                while (br.readLine().also { line = it } != null) showOutputLine(line!!, isError)
             }
         } catch (e: IOException) {
             showOutputLine(e.fillInStackTrace().toString() + CommandExecutor.NEW_LINE, true)
         }
     }
 
-    private fun showOutputLine(line: String?, isError: Boolean) {
-        if (isError) appender.appendErrText(line!!) else appender.appendStdText(line!!)
+    private fun showOutputLine(line: String, isError: Boolean) {
+        if (isError) appender.appendErrText(line) else appender.appendStdText(line)
     }
 
     companion object {

@@ -125,12 +125,8 @@ class CommandBuilder() {
             return strings.toTypedArray()
         }
 
-        fun buildRawCommand(cmdLine: String): Command {
-            return CommandImpl(cmdLine, splitCmd(cmdLine))
-        }
+        fun buildRawCommand(cmdLine: String): Command = CommandImpl(cmdLine, splitCmd(cmdLine))
 
-        fun buildRawCommand2(cmdLine: String, cmds: Array<String>): Command {
-            return CommandImpl(cmdLine, cmds)
-        }
+        fun buildRawCommand(cmdLine: String, cmds: Array<String>): Command = CommandImpl(cmdLine, cmds)
     }
 }
