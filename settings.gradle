@@ -1,2 +1,3 @@
 rootProject.name = 'kcommand'
-
+include 'core'
+include 'example'
