@@ -21,8 +21,9 @@ object CommandExecutor {
     internal val NEW_LINE = System.getProperty("line.separator")
 
     @JvmStatic
-    fun setExecutors(executorService: ExecutorService) {
+    fun setExecutors(executorService: ExecutorService):CommandExecutor {
         this.WORKERS = executorService
+        return this
     }
 
     @JvmStatic

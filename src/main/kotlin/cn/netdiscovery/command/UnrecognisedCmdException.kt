@@ -23,8 +23,5 @@ class UnrecognisedCmdException(cmd: String) : IOException() {
         this.cmd = cmd
     }
 
-    override fun toString(): String {
-        return "could not recognise $cmd"
-    }
-
+    override fun toString(): String = "could not recognise $cmd"
 }
