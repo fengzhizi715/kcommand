@@ -27,19 +27,19 @@ object CommandExecutor {
 
     @JvmStatic
     @Throws(UnrecognisedCmdException::class)
-    fun execute(cmdLine: String): ProcessMonitor = execute(CommandBuilder.buildRawCommand(cmdLine), null )
+    fun execute(cmdLine: String): ProcessResult = execute(CommandBuilder.buildRawCommand(cmdLine), null )
 
     @JvmStatic
     @Throws(UnrecognisedCmdException::class)
-    fun execute(cmdLine: String, appender: Appender): ProcessMonitor = execute(CommandBuilder.buildRawCommand(cmdLine), null, ExecutionOutputPrinter(appender))
+    fun execute(cmdLine: String, appender: Appender): ProcessResult = execute(CommandBuilder.buildRawCommand(cmdLine), null, ExecutionOutputPrinter(appender))
 
     @JvmStatic
     @Throws(UnrecognisedCmdException::class)
-    fun execute(cmd: Command, directory: File?=null, outputPrinter: ExecutionOutputPrinter = ExecutionOutputPrinter.DEFAULT_OUTPUT_PRINTER): ProcessMonitor {
+    fun execute(cmd: Command, directory: File?=null, outputPrinter: ExecutionOutputPrinter = ExecutionOutputPrinter.DEFAULT_OUTPUT_PRINTER): ProcessResult {
         val p = executeCommand(cmd, directory)
         recordOutput(p, outputPrinter)
         val futureReport = WORKERS.submit(ExecutionCallable(p, cmd))
-        return ProcessMonitor(p, futureReport)
+        return ProcessResult(p, futureReport)
     }
 
     @Throws(UnrecognisedCmdException::class)
@@ -61,16 +61,16 @@ object CommandExecutor {
         WORKERS.execute { outputPrinter.handleErrStream(p.errorStream) }
     }
 
-    private class ExecutionCallable(private val p: Process, private val cmd: Command) : Callable<ExecutionReport> {
+    private class ExecutionCallable(private val p: Process, private val cmd: Command) : Callable<ExecutionResult> {
 
         @Throws(Exception::class)
-        override fun call(): ExecutionReport {
+        override fun call(): ExecutionResult {
             try {
                 p.waitFor()
             } catch (e: InterruptedException) {
                 //nothing.
             }
-            return ExecutionReport.makeReport(cmd, p.exitValue())
+            return ExecutionResult.makeReport(cmd, p.exitValue())
         }
     }
 }

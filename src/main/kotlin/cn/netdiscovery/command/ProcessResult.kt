@@ -11,12 +11,12 @@ import java.util.concurrent.Future
  * @date: 2020-05-19 18:00
  * @version: V1.0 <描述当前版本功能>
  */
-class ProcessMonitor(
+class ProcessResult(
     private val process: Process,
-    private val futureReport: Future<ExecutionReport>
+    private val futureResult: Future<ExecutionResult>
 ) {
 
-    fun isAlive(): Boolean = process.isAlive
+    private fun isAlive(): Boolean = process.isAlive
 
     fun abort(): Int {
         if (isAlive()) {
@@ -30,14 +30,14 @@ class ProcessMonitor(
         return process.exitValue()
     }
 
-    fun getExecutionReport(): ExecutionReport? {
-        var report: ExecutionReport? = null
+    fun getExecutionResult(): ExecutionResult? {
+        var result: ExecutionResult? = null
         try {
-            report = futureReport.get()
+            result = futureResult.get()
         } catch (e: InterruptedException) {
             //do nothing.
         } catch (e: ExecutionException) {
         }
-        return report
+        return result
     }
 }

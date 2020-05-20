@@ -31,10 +31,10 @@ fun main() {
     })
 
     try {
-        val pMonitor = CommandExecutor.execute(cmd, null, eop) //execute the command, redirect the output to eop.
-        val report = pMonitor.getExecutionReport() //blocks until the process finishes or gets aborted.
+        val pResult = CommandExecutor.execute(cmd, null, eop) //execute the command, redirect the output to eop.
+        val result = pResult.getExecutionResult() //blocks until the process finishes or gets aborted.
         val commandLine = cmd.string()
-        val exitCode = report!!.exitValue()
+        val exitCode = result!!.exitValue()
         println("command line: $commandLine\nexecution finished with exit code: $exitCode\n\n")
     } catch (e: UnrecognisedCmdException) {
         System.err.println(e)
