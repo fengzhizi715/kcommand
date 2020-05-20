@@ -129,8 +129,8 @@ class CommandBuilder() {
             return CommandImpl(cmdLine, splitCmd(cmdLine))
         }
 
-        fun buildRawCommand2(cmds: Array<String>): Command {
-            return CommandImpl(cmds[2], cmds)
+        fun buildRawCommand2(cmdLine: String, cmds: Array<String>): Command {
+            return CommandImpl(cmdLine, cmds)
         }
     }
 }

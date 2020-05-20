@@ -3,6 +3,7 @@ package cn.netdiscovery.command
 import java.io.File
 import java.io.IOException
 import java.util.concurrent.Callable
+import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 
 /**
@@ -16,24 +17,21 @@ import java.util.concurrent.Executors
 object CommandExecutor {
 
     private val pb = ProcessBuilder()
-    private val WORKERS = Executors.newCachedThreadPool()
+    private var WORKERS = Executors.newFixedThreadPool(2)
     internal val NEW_LINE = System.getProperty("line.separator")
 
-    @Throws(UnrecognisedCmdException::class)
-    fun execute(cmdLine: String): ProcessMonitor {
-        return execute(
-            CommandBuilder.buildRawCommand(cmdLine),
-            null,
-            ExecutionOutputPrinter.DEFAULT_OUTPUT_PRINTER
-        )
+    fun setExecutors(executorService: ExecutorService) {
+        this.WORKERS = executorService
     }
+
+    @Throws(UnrecognisedCmdException::class)
+    fun execute(cmdLine: String): ProcessMonitor = execute(CommandBuilder.buildRawCommand(cmdLine), null, ExecutionOutputPrinter.DEFAULT_OUTPUT_PRINTER)
 
     @Throws(UnrecognisedCmdException::class)
     fun execute(cmd: Command, directory: File?=null, outputPrinter: ExecutionOutputPrinter): ProcessMonitor {
         val p = executeCommand(cmd, directory)
         recordOutput(p, outputPrinter)
-        val futureReport =
-            WORKERS.submit(ExecutionCallable(p, cmd))
+        val futureReport = WORKERS.submit(ExecutionCallable(p, cmd))
         return ProcessMonitor(p, futureReport)
     }
 
@@ -56,8 +54,7 @@ object CommandExecutor {
         WORKERS.execute { outputPrinter.handleErrStream(p.errorStream) }
     }
 
-    private class ExecutionCallable(private val p: Process, private val cmd: Command) :
-        Callable<ExecutionReport> {
+    private class ExecutionCallable(private val p: Process, private val cmd: Command) : Callable<ExecutionReport> {
 
         @Throws(Exception::class)
         override fun call(): ExecutionReport {
