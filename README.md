@@ -2,6 +2,11 @@
 
 kcommand 是基于 Kotlin 特性实现的执行 Linux 命令的库
 
+# 功能特点：
+
+* 简洁的命令执行工具
+* 支持 RxJava 3
+
 # 下载：
 
 ```groovy
@@ -10,4 +15,53 @@ implementation 'cn.netdiscovery.kcommand:kcommand-core:1.0.0'
 
 ```groovy
 implementation 'cn.netdiscovery.kcommand:kcommand-rxjava:1.0.0'
+```
+
+# 使用：
+
+### basic
+
+```kotlin
+    val cmd = CommandBuilder("ping").addArg("baidu.com").build()
+
+    try {
+        CommandExecutor.execute(cmd, null)
+    } catch (e: UnrecognisedCmdException) {
+        System.err.println(e)
+    }
+```
+
+### 返回结果
+
+```kotlin
+    val list = mutableListOf<String>()
+    list.add("sh")
+    list.add("-c")
+
+    val psCommand = "ps aux | grep java"
+
+    list.add(psCommand)
+
+    val cmd = CommandBuilder.buildRawCommand(psCommand, list.toTypedArray())
+
+    try {
+        val pResult = CommandExecutor.execute(cmd, null, object : Appender {
+
+            override fun appendStdText(text: String) {
+                println(text)
+            }
+
+            override fun appendErrText(text: String) {
+                System.err.println(text)
+            }
+        })
+
+        pResult.getExecutionResult()?.let {
+            val commandLine = cmd.string()
+            val exitCode = it.exitValue()
+            println("command line: $commandLine\nexecution finished with exit code: $exitCode\n\n")
+        }
+    } catch (e: UnrecognisedCmdException) {
+        System.err.println(e)
+    }
 ```
