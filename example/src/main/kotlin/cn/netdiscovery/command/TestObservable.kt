@@ -1,6 +1,6 @@
 package cn.netdiscovery.command
 
-import cn.netdiscovery.command.rxjava3.getObservable
+import cn.netdiscovery.command.rxjava3.asObservable
 
 /**
  *
@@ -35,7 +35,7 @@ fun main() {
 
     try {
         CommandExecutor.execute(cmd, null, eop)
-            .getObservable()
+            .asObservable()
             .subscribe {
 
                 val commandLine = cmd.string()
