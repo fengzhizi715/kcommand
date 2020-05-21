@@ -32,7 +32,11 @@ object CommandExecutor {
 
     @JvmStatic
     @Throws(UnrecognisedCmdException::class)
-    fun execute(cmdLine: String, appender: Appender): ProcessResult = execute(CommandBuilder.buildRawCommand(cmdLine), null, ExecutionOutputPrinter(appender))
+    fun execute(cmdLine: String, directory: File?=null, appender: Appender): ProcessResult = execute(CommandBuilder.buildRawCommand(cmdLine), directory, ExecutionOutputPrinter(appender))
+
+    @JvmStatic
+    @Throws(UnrecognisedCmdException::class)
+    fun execute(cmd: Command, directory: File?=null, appender: Appender): ProcessResult = execute(cmd, directory, ExecutionOutputPrinter(appender))
 
     @JvmStatic
     @Throws(UnrecognisedCmdException::class)

@@ -19,19 +19,17 @@ fun main() {
 
     val cmd = CommandBuilder.buildRawCommand("ps aux | grep java", list.toTypedArray())
 
-    val eop = ExecutionOutputPrinter(object : Appender {
-
-        override fun appendStdText(text: String) {
-            println(text)
-        }
-
-        override fun appendErrText(text: String) {
-            System.err.println(text)
-        }
-    })
-
     try {
-        val pResult = CommandExecutor.execute(cmd, null, eop)
+        val pResult = CommandExecutor.execute(cmd, null, object : Appender {
+
+            override fun appendStdText(text: String) {
+                println(text)
+            }
+
+            override fun appendErrText(text: String) {
+                System.err.println(text)
+            }
+        })
 
         val result = pResult.getResult().get()
 
