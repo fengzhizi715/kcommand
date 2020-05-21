@@ -21,6 +21,9 @@ class ProcessResult(
 
     private fun isAlive(): Boolean = process.isAlive
 
+    /**
+     * 命令停止执行
+     */
     fun abort(): Int {
         if (isAlive()) {
             process.destroyForcibly()
@@ -33,6 +36,10 @@ class ProcessResult(
         return process.exitValue()
     }
 
+    /**
+     * 返回 ExecutionResult （会确保命令已经执行完毕）
+     * ExecutionResult 的 exitValue() 会返回命令执行成功与否。(0 表示执行成功)
+     */
     fun getExecutionResult(): ExecutionResult? {
         var result: ExecutionResult? = null
         try {
@@ -44,6 +51,9 @@ class ProcessResult(
         return result
     }
 
+    /**
+     * 返回命令的执行结果，使用 Result 进行封装。可以调用 Result.get() 来或者执行的值或者异常
+     */
     fun getResult():Result<ExecutionResult,Exception> = resultFrom {
         futureResult.get()
     }
