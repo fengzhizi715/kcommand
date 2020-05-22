@@ -17,7 +17,7 @@ import java.util.concurrent.Executors
 object CommandExecutor {
 
     private val pb = ProcessBuilder()
-    private var WORKERS = Executors.newFixedThreadPool(2)
+    private var WORKERS = Executors.newCachedThreadPool()
     internal val NEW_LINE = System.getProperty("line.separator")
 
     @JvmStatic
