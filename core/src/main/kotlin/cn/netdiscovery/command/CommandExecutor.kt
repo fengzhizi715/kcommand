@@ -30,14 +30,17 @@ object CommandExecutor {
     @Throws(UnrecognisedCmdException::class)
     fun execute(cmdLine: String): ProcessResult = execute(CommandBuilder.buildRawCommand(cmdLine), null )
 
+    @JvmOverloads
     @JvmStatic
     @Throws(UnrecognisedCmdException::class)
     fun execute(cmdLine: String, directory: File?=null, appender: Appender): ProcessResult = execute(CommandBuilder.buildRawCommand(cmdLine), directory, ExecutionOutputPrinter(appender))
 
+    @JvmOverloads
     @JvmStatic
     @Throws(UnrecognisedCmdException::class)
     fun execute(cmd: Command, directory: File?=null, appender: Appender): ProcessResult = execute(cmd, directory, ExecutionOutputPrinter(appender))
 
+    @JvmOverloads
     @JvmStatic
     @Throws(UnrecognisedCmdException::class)
     fun execute(cmd: Command, directory: File?=null, outputPrinter: ExecutionOutputPrinter = ExecutionOutputPrinter.DEFAULT_OUTPUT_PRINTER): ProcessResult {
