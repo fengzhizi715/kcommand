@@ -1,6 +1,7 @@
 plugins {
     id 'java'
     id 'kotlin'
+    id 'com.novoda.bintray-release'
 }
 
 group 'cn.netdiscovery'
@@ -16,6 +17,8 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
     testCompile group: 'junit', name: 'junit', version: '4.12'
 
+    implementation project(":core")
+
     implementation "io.reactivex.rxjava2:rxjava:2.2.19"
 }
 
@@ -24,4 +27,13 @@ compileKotlin {
 }
 compileTestKotlin {
     kotlinOptions.jvmTarget = "1.8"
+}
+
+publish{
+    userOrg = 'fengzhizi715'
+    groupId = 'cn.netdiscovery.kcommand'
+    artifactId = 'kcommand-rxjava2'
+    publishVersion = "$command_version"
+    desc = 'A command execute library for Kotlin.'
+    website = 'https://github.com/fengzhizi715/kcommand'
 }

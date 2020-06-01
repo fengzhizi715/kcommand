@@ -32,7 +32,7 @@ compileTestKotlin {
 publish{
     userOrg = 'fengzhizi715'
     groupId = 'cn.netdiscovery.kcommand'
-    artifactId = 'kcommand-rxjava'
+    artifactId = 'kcommand-rxjava3'
     publishVersion = "$command_version"
     desc = 'A command execute library for Kotlin.'
     website = 'https://github.com/fengzhizi715/kcommand'
