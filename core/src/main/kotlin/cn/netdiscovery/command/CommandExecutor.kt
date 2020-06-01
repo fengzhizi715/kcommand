@@ -20,8 +20,11 @@ object CommandExecutor {
     private var WORKERS = Executors.newCachedThreadPool()
     internal val NEW_LINE = System.getProperty("line.separator")
 
+    /**
+     * 支持自定义线程池，这个线程池来执行命令
+     */
     @JvmStatic
-    fun setExecutors(executorService: ExecutorService):CommandExecutor {
+    fun setWorkerExecutors(executorService: ExecutorService):CommandExecutor {
         this.WORKERS = executorService
         return this
     }

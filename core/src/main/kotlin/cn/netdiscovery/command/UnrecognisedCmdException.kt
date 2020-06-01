@@ -10,18 +10,7 @@ import java.io.IOException
  * @date: 2020-05-19 17:49
  * @version: V1.0 <描述当前版本功能>
  */
-class UnrecognisedCmdException(cmd: String) : IOException() {
-
-    private val cmd: String
-
-    /**
-     * the public constructors that requires the command that caused the error.
-     *
-     * @param cmd
-     */
-    init {
-        this.cmd = cmd
-    }
+class UnrecognisedCmdException(private val cmd: String) : IOException() {
 
     override fun toString(): String = "could not recognise $cmd"
 }

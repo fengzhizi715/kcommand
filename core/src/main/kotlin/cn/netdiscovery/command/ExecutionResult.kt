@@ -16,7 +16,7 @@ interface ExecutionResult {
 
     companion object {
 
-        fun makeReport(cmd: Command, exitValue: Int): ExecutionResult = object : ExecutionResult {
+        fun makeReport(cmd: Command, exitValue: Int)= object : ExecutionResult {
 
             override fun exitValue(): Int = exitValue
 
