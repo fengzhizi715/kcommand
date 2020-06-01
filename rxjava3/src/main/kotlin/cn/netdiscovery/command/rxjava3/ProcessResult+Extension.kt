@@ -12,18 +12,18 @@ import io.reactivex.rxjava3.core.*
  * @date: 2020-05-21 00:07
  * @version: V1.0 <描述当前版本功能>
  */
-fun ProcessResult.asObservable(): Observable<ExecutionResult> = Observable.create<ExecutionResult> {
+fun ProcessResult.asObservable(): Observable<ExecutionResult> = Observable.create {
     it.onNext(this.getExecutionResult())
 }
 
-fun ProcessResult.asFlowable(): Flowable<ExecutionResult> = Flowable.create<ExecutionResult>({
+fun ProcessResult.asFlowable(): Flowable<ExecutionResult> = Flowable.create({
     it.onNext(this.getExecutionResult())
 }, BackpressureStrategy.BUFFER)
 
-fun ProcessResult.asSingle(): Single<ExecutionResult> = Single.create<ExecutionResult> {
+fun ProcessResult.asSingle(): Single<ExecutionResult> = Single.create {
     it.onSuccess(this.getExecutionResult())
 }
 
-fun ProcessResult.asMaybe(): Maybe<ExecutionResult> = Maybe.create<ExecutionResult> {
+fun ProcessResult.asMaybe(): Maybe<ExecutionResult> = Maybe.create {
     it.onSuccess(this.getExecutionResult())
 }

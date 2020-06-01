@@ -12,25 +12,25 @@ import io.reactivex.*
  * @date: 2020-05-21 00:07
  * @version: V1.0 <描述当前版本功能>
  */
-fun ProcessResult.asObservable(): Observable<ExecutionResult> = Observable.create<ExecutionResult> {
+fun ProcessResult.asObservable(): Observable<ExecutionResult> = Observable.create {
     this.getExecutionResult()?.run {
         it.onNext(this)
     }
 }
 
-fun ProcessResult.asFlowable(): Flowable<ExecutionResult> = Flowable.create<ExecutionResult>({
+fun ProcessResult.asFlowable(): Flowable<ExecutionResult> = Flowable.create({
     this.getExecutionResult()?.run {
         it.onNext(this)
     }
 }, BackpressureStrategy.BUFFER)
 
-fun ProcessResult.asSingle(): Single<ExecutionResult> = Single.create<ExecutionResult> {
+fun ProcessResult.asSingle(): Single<ExecutionResult> = Single.create {
     this.getExecutionResult()?.run {
         it.onSuccess(this)
     }
 }
 
-fun ProcessResult.asMaybe(): Maybe<ExecutionResult> = Maybe.create<ExecutionResult> {
+fun ProcessResult.asMaybe(): Maybe<ExecutionResult> = Maybe.create {
     this.getExecutionResult()?.run {
         it.onSuccess(this)
     }
