@@ -12,15 +12,7 @@ import cn.netdiscovery.command.rxjava3.asObservable
  */
 fun main() {
 
-    val list = mutableListOf<String>()
-    list.add("sh")
-    list.add("-c")
-
-    val psCommand = "ps aux | grep java"
-
-    list.add(psCommand)
-
-    val cmd = CommandBuilder.buildRawCommand(psCommand, list.toTypedArray())
+    val cmd = getPsCmd()
 
     val eop = ExecutionOutputPrinter(object : Appender {
 

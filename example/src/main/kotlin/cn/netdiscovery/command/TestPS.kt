@@ -8,8 +8,7 @@ package cn.netdiscovery.command
  * @date: 2020-05-20 20:53
  * @version: V1.0 <描述当前版本功能>
  */
-fun main() {
-
+fun getPsCmd():Command {
     val list = mutableListOf<String>()
     list.add("sh")
     list.add("-c")
@@ -18,7 +17,12 @@ fun main() {
 
     list.add(psCommand)
 
-    val cmd = CommandBuilder.buildRawCommand(psCommand, list.toTypedArray())
+    return CommandBuilder.buildRawCommand(psCommand, list.toTypedArray())
+}
+
+fun main() {
+
+    val cmd = getPsCmd()
 
     try {
         val pResult = CommandExecutor.execute(cmd, null, object : Appender {

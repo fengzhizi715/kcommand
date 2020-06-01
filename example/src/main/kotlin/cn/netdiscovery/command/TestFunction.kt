@@ -12,12 +12,7 @@ import cn.netdiscovery.command.fuction.get
  */
 fun main() {
 
-    val list = mutableListOf<String>()
-    list.add("sh")
-    list.add("-c")
-    list.add("ps aux | grep java")
-
-    val cmd = CommandBuilder.buildRawCommand("ps aux | grep java", list.toTypedArray())
+    val cmd = getPsCmd()
 
     try {
         val pResult = CommandExecutor.execute(cmd, null, object : Appender {
