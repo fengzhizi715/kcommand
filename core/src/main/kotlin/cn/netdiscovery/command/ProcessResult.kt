@@ -52,7 +52,7 @@ class ProcessResult(
     }
 
     /**
-     * 返回命令的执行结果，使用 Result 进行封装。可以调用 Result.get() 来或者执行的值或者异常
+     * 返回命令的执行结果，使用 Result 进行封装。可以调用 Result.get() 来获取执行的值或者异常
      */
     fun getResult():Result<ExecutionResult,Exception> = resultFrom {
         futureResult.get()

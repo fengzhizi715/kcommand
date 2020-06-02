@@ -21,7 +21,7 @@ object CommandExecutor {
     internal val NEW_LINE = System.getProperty("line.separator")
 
     /**
-     * 支持自定义线程池，这个线程池来执行命令
+     * 支持自定义线程池，通过这个线程池来执行命令
      */
     @JvmStatic
     fun setWorkerExecutors(executorService: ExecutorService):CommandExecutor {
