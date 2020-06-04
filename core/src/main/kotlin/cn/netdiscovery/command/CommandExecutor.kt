@@ -43,6 +43,10 @@ object CommandExecutor {
     @Throws(UnrecognisedCmdException::class)
     fun execute(cmd: Command, directory: File?=null, appender: Appender): ProcessResult = execute(cmd, directory, ExecutionOutputPrinter(appender))
 
+    @JvmStatic
+    @Throws(UnrecognisedCmdException::class)
+    inline fun execute(cmd: ()->Command): ProcessResult = execute(cmd.invoke())
+
     @JvmOverloads
     @JvmStatic
     @Throws(UnrecognisedCmdException::class)
