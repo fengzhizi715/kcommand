@@ -4,3 +4,5 @@ include 'rxjava3'
 include 'rxjava2'
 
 include 'example'
+include 'coroutines'
+
