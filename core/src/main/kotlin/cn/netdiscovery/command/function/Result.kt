@@ -1,9 +1,9 @@
-package cn.netdiscovery.command.fuction
+package cn.netdiscovery.command.function
 
 /**
  *
  * @FileName:
- *          cn.netdiscovery.command.fuction.Result
+ *          cn.netdiscovery.command.function.Result
  * @author: Tony Shen
  * @date: 2020-05-20 15:36
  * @version: V1.0 <描述当前版本功能>
