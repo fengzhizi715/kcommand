@@ -6,7 +6,7 @@ kcommand 是基于 Kotlin 特性实现的执行 Linux 命令的库
 
 * 简洁的命令执行工具
 * 支持函数式
-* 支持 RxJava 2、RxJava 3
+* 支持 RxJava 2、RxJava 3、CompletableFuture
 
 # 下载：
 
