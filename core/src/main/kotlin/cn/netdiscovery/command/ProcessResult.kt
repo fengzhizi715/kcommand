@@ -5,6 +5,8 @@ import cn.netdiscovery.command.function.resultFrom
 import java.lang.Exception
 import java.util.concurrent.ExecutionException
 import java.util.concurrent.Future
+import java.util.concurrent.TimeUnit
+import java.util.concurrent.TimeoutException
 
 /**
  *
@@ -15,6 +17,7 @@ import java.util.concurrent.Future
  * @version: V1.0 <描述当前版本功能>
  */
 class ProcessResult(
+    private val cmd: Command,
     private val process: Process,
     private val futureResult: Future<ExecutionResult>
 ) {
@@ -47,6 +50,25 @@ class ProcessResult(
         } catch (e: InterruptedException) {
             //do nothing.
         } catch (e: ExecutionException) {
+        }
+        return result
+    }
+
+    /**
+     * 增加超时机制
+     */
+    fun getExecutionResult(timeout:Long,unit:TimeUnit): ExecutionResult? {
+        var result: ExecutionResult? = null
+        try {
+            result = futureResult.get(timeout,unit)
+        } catch (e: InterruptedException) {
+            //do nothing.
+        } catch (e: ExecutionException) {
+        } catch (e:TimeoutException) {
+            futureResult.cancel(true)
+            val exitValue = abort()
+
+            result = ExecutionResult.makeReport(cmd,exitValue)
         }
         return result
     }

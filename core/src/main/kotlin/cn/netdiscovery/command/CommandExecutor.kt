@@ -54,7 +54,7 @@ object CommandExecutor {
         val p = executeCommand(cmd, directory)
         recordOutput(p, outputPrinter)
         val futureReport = WORKERS.submit(ExecutionCallable(p, cmd))
-        return ProcessResult(p, futureReport)
+        return ProcessResult(cmd, p, futureReport)
     }
 
     @Throws(UnrecognisedCmdException::class)
