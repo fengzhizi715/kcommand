@@ -12,6 +12,9 @@ interface ExecutionResult {
 
     fun command(): Command
 
+    /**
+     * 0 表示成功，非 0 表示失败
+     */
     fun exitValue(): Int
 
     companion object {

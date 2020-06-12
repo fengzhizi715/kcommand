@@ -43,34 +43,35 @@ class ProcessResult(
      * 返回 ExecutionResult （会确保命令已经执行完毕）
      * ExecutionResult 的 exitValue() 会返回命令执行成功与否。(0 表示执行成功)
      */
-    fun getExecutionResult(): ExecutionResult? {
+    fun getExecutionResult(): ExecutionResult {
         var result: ExecutionResult? = null
         try {
             result = futureResult.get()
         } catch (e: InterruptedException) {
-            //do nothing.
+            result = ExecutionResult.makeReport(cmd,1)
         } catch (e: ExecutionException) {
+            result = ExecutionResult.makeReport(cmd,1)
         }
-        return result
+        return result!!
     }
 
     /**
      * 增加超时机制
      */
-    fun getExecutionResult(timeout:Long,unit:TimeUnit): ExecutionResult? {
+    fun getExecutionResult(timeout:Long,unit:TimeUnit): ExecutionResult {
         var result: ExecutionResult? = null
         try {
             result = futureResult.get(timeout,unit)
         } catch (e: InterruptedException) {
-            //do nothing.
+            result = ExecutionResult.makeReport(cmd,1)
         } catch (e: ExecutionException) {
+            result = ExecutionResult.makeReport(cmd,1)
         } catch (e:TimeoutException) {
             futureResult.cancel(true)
             val exitValue = abort()
-
             result = ExecutionResult.makeReport(cmd,exitValue)
         }
-        return result
+        return result!!
     }
 
     /**

@@ -15,9 +15,7 @@ fun main() {
     val cmd = CommandBuilder("ping").addArg("baidu.com").build()
 
     try {
-        val  result = CommandExecutor.execute(cmd, null).getExecutionResult(5,TimeUnit.SECONDS)
-
-        result?.let {
+        CommandExecutor.execute(cmd, null).getExecutionResult(5,TimeUnit.SECONDS).let {
 
             val commandLine = it.command().string()
             val exitCode = it.exitValue()
