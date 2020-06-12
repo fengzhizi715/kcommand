@@ -40,6 +40,7 @@ implementation 'cn.netdiscovery.kcommand:kcommand-rxjava3:1.1.0'
 ### 返回结果
 
 ```kotlin
+fun getPsCmd():Command {
     val list = mutableListOf<String>()
     list.add("sh")
     list.add("-c")
@@ -48,10 +49,15 @@ implementation 'cn.netdiscovery.kcommand:kcommand-rxjava3:1.1.0'
 
     list.add(psCommand)
 
-    val cmd = CommandBuilder.buildRawCommand(psCommand, list.toTypedArray())
+    return CommandBuilder.buildRawCommand(psCommand, list.toTypedArray())
+}
+
+fun main() {
+
+    val cmd = getPsCmd()
 
     try {
-        val pResult = CommandExecutor.execute(cmd, null, object : Appender {
+        CommandExecutor.execute(cmd, null, object : Appender {
 
             override fun appendStdText(text: String) {
                 println(text)
@@ -60,9 +66,7 @@ implementation 'cn.netdiscovery.kcommand:kcommand-rxjava3:1.1.0'
             override fun appendErrText(text: String) {
                 System.err.println(text)
             }
-        })
-
-        pResult.getExecutionResult()?.let {
+        }).getExecutionResult().let {
             val commandLine = cmd.string()
             val exitCode = it.exitValue()
             println("command line: $commandLine\nexecution finished with exit code: $exitCode\n\n")
@@ -70,6 +74,7 @@ implementation 'cn.netdiscovery.kcommand:kcommand-rxjava3:1.1.0'
     } catch (e: UnrecognisedCmdException) {
         System.err.println(e)
     }
+}
 ```
 
 ### 支持 RxJava 
@@ -114,12 +119,7 @@ implementation 'cn.netdiscovery.kcommand:kcommand-rxjava3:1.1.0'
 ### 支持函数式
 
 ```kotlin
-    val list = mutableListOf<String>()
-    list.add("sh")
-    list.add("-c")
-    list.add("ps aux | grep java")
-
-    val cmd = CommandBuilder.buildRawCommand("ps aux | grep java", list.toTypedArray())
+    val cmd = getPsCmd()
 
     try {
         val pResult = CommandExecutor.execute(cmd, null, object : Appender {
