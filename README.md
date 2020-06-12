@@ -147,3 +147,7 @@ implementation 'cn.netdiscovery.kcommand:kcommand-rxjava3:1.1.0'
 ```
 
 其中 pResult.getResult() 返回的 [Result](https://github.com/fengzhizi715/kcommand/blob/master/core/src/main/kotlin/cn/netdiscovery/command/fuction/Result.kt) 可以点击查看
+
+# TODO List：
+
+* 完善支持函数式的 Result
