@@ -18,6 +18,7 @@ dependencies {
 
     implementation project(":core")
     implementation project(":rxjava3")
+    implementation project(":coroutines")
 
     implementation "io.reactivex.rxjava3:rxjava:3.0.3"
 }

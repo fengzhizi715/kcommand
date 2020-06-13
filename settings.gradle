@@ -2,7 +2,8 @@ rootProject.name = 'kcommand'
 include 'core'
 include 'rxjava3'
 include 'rxjava2'
+include 'coroutines'
 
 include 'example'
-include 'coroutines'
+
 
