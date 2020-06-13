@@ -14,19 +14,8 @@ fun main() {
 
     val cmd = getPsCmd()
 
-    val eop = ExecutionOutputPrinter(object : Appender {
-
-        override fun appendStdText(text: String) {
-            println(text)
-        }
-
-        override fun appendErrText(text: String) {
-            System.err.println(text)
-        }
-    })
-
     try {
-        CommandExecutor.execute(cmd, null, eop)
+        CommandExecutor.execute(cmd, null)
             .asObservable()
             .subscribe {
 

@@ -14,19 +14,8 @@ fun main() {
 
     val cmd = getPsCmd()
 
-    val eop = ExecutionOutputPrinter(object : Appender {
-
-        override fun appendStdText(text: String) {
-            println(text)
-        }
-
-        override fun appendErrText(text: String) {
-            System.err.println(text)
-        }
-    })
-
     try {
-        val executionResult = CommandExecutor.execute(cmd, null, eop).asCompletableFuture().get()
+        val executionResult = CommandExecutor.execute(cmd, null).asCompletableFuture().get()
 
         val commandLine = cmd.string()
         val exitCode = executionResult.exitValue()

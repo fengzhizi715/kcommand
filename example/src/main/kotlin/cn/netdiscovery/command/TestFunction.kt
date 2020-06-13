@@ -15,7 +15,7 @@ fun main() {
     val cmd = getPsCmd()
 
     try {
-        val pResult = CommandExecutor.execute(cmd, null, object : Appender {
+        val result = CommandExecutor.execute(cmd, null, object : Appender {
 
             override fun appendStdText(text: String) {
                 println(text)
@@ -24,9 +24,7 @@ fun main() {
             override fun appendErrText(text: String) {
                 System.err.println(text)
             }
-        })
-
-        val result = pResult.getResult().get()
+        }).getResult().get()
 
         if (result is ExecutionResult) {
 
