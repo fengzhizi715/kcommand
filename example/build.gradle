@@ -8,7 +8,10 @@ version '1.0-SNAPSHOT'
 
 sourceCompatibility = 1.8
 
+def libs = rootProject.ext.libraries // 库
+
 repositories {
+    jcenter()
     mavenCentral()
 }
 
@@ -21,6 +24,7 @@ dependencies {
     implementation project(":coroutines")
 
     implementation "io.reactivex.rxjava3:rxjava:3.0.3"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:${libs.kotlinx_coroutines_core}"
 }
 
 compileKotlin {
