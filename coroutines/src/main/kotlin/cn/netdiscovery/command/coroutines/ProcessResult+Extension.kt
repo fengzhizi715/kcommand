@@ -13,7 +13,4 @@ import kotlinx.coroutines.flow.flowOf
  * @date: 2020-06-13 23:04
  * @version: V1.1 <描述当前版本功能>
  */
-fun ProcessResult.asFlow():Flow<ExecutionResult> {
-
-    return flowOf(this.getExecutionResult())
-}
+fun ProcessResult.asFlow():Flow<ExecutionResult> = flowOf(this.getExecutionResult())
