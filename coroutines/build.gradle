@@ -1,6 +1,7 @@
 plugins {
     id 'java'
     id 'kotlin'
+    id 'com.novoda.bintray-release'
 }
 
 group 'cn.netdiscovery'
@@ -28,4 +29,13 @@ compileKotlin {
 }
 compileTestKotlin {
     kotlinOptions.jvmTarget = "1.8"
+}
+
+publish{
+    userOrg = 'fengzhizi715'
+    groupId = 'cn.netdiscovery.kcommand'
+    artifactId = 'kcommand-coroutines'
+    publishVersion = "$command_version"
+    desc = 'A command execute library for Kotlin.'
+    website = 'https://github.com/fengzhizi715/kcommand'
 }
