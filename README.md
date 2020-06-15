@@ -6,7 +6,7 @@ kcommand 是基于 Kotlin 特性实现的执行 Linux 命令的库
 
 * 简洁的命令执行工具
 * 支持函数式
-* 支持 RxJava 2、RxJava 3、CompletableFuture
+* 支持 RxJava 2、RxJava 3、CompletableFuture、Coroutines
 * 支持命令执行的超时机制
 
 # 下载：
@@ -21,6 +21,10 @@ implementation 'cn.netdiscovery.kcommand:kcommand-rxjava2:1.1.1'
 
 ```groovy
 implementation 'cn.netdiscovery.kcommand:kcommand-rxjava3:1.1.1'
+```
+
+```groovy
+implementation 'cn.netdiscovery.kcommand:kcommand-coroutines:1.1.1'
 ```
 
 # 使用：
@@ -147,3 +151,26 @@ fun main() {
 ```
 
 其中 pResult.getResult() 返回的 [Result](https://github.com/fengzhizi715/kcommand/blob/master/core/src/main/kotlin/cn/netdiscovery/command/fuction/Result.kt) 可以点击查看
+
+
+### Coroutines
+
+```kotlin
+fun main() = runBlocking{
+
+    val cmd = getPsCmd()
+
+    try {
+        CommandExecutor.execute(cmd, null)
+            .asFlow()
+            .collect{
+                val commandLine = cmd.string()
+                val exitCode = it.exitValue()
+                println("command line: $commandLine\nexecution finished with exit code: $exitCode\n\n")
+            }
+
+    } catch (e: UnrecognisedCmdException) {
+        System.err.println(e)
+    }
+}
+```
