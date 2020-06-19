@@ -122,13 +122,28 @@ class CommandBuilder() {
             return strings.toTypedArray()
         }
 
+        @JvmStatic
         fun buildRawCommand(cmdLine: String): Command = CommandImpl(cmdLine, splitCmd(cmdLine))
 
+        @JvmStatic
         fun buildRawCommand(cmdBlock: ()->String): Command {
             val cmdLine = cmdBlock.invoke()
             return CommandImpl(cmdLine, splitCmd(cmdLine))
         }
 
+        @JvmStatic
         fun buildRawCommand(cmdLine: String, cmdArray: Array<String>): Command = CommandImpl(cmdLine, cmdArray)
+
+        @JvmStatic
+        fun buildSuCommand(cmdLine:String,password:String = ""):Command {
+
+            val list = mutableListOf<String>()
+            list.add("sh")
+            list.add("-c")
+            val realCommand = "echo $password | sudo -S $cmdLine"
+            list.add(realCommand)
+
+            return CommandImpl(cmdLine, list.toTypedArray())
+        }
     }
 }
