@@ -5,26 +5,28 @@ kcommand 是基于 Kotlin 特性实现的执行 Linux 命令的库
 # 功能特点：
 
 * 简洁的命令执行工具
+* 支持命令执行的超时机制
+* 对 sudo 命令提供额外的支持
 * 支持函数式
 * 支持 RxJava 2、RxJava 3、CompletableFuture、Coroutines
-* 支持命令执行的超时机制
+
 
 # 下载：
 
 ```groovy
-implementation 'cn.netdiscovery.kcommand:kcommand-core:1.1.1'
+implementation 'cn.netdiscovery.kcommand:kcommand-core:1.1.3'
 ```
 
 ```groovy
-implementation 'cn.netdiscovery.kcommand:kcommand-rxjava2:1.1.1'
+implementation 'cn.netdiscovery.kcommand:kcommand-rxjava2:1.1.3'
 ```
 
 ```groovy
-implementation 'cn.netdiscovery.kcommand:kcommand-rxjava3:1.1.1'
+implementation 'cn.netdiscovery.kcommand:kcommand-rxjava3:1.1.3'
 ```
 
 ```groovy
-implementation 'cn.netdiscovery.kcommand:kcommand-coroutines:1.1.1'
+implementation 'cn.netdiscovery.kcommand:kcommand-coroutines:1.1.3'
 ```
 
 # 使用：
@@ -80,6 +82,31 @@ fun main() {
     }
 }
 ```
+
+### 使用 sudo 
+
+```kotlin
+    val cmd = CommandBuilder.buildSudoCommand("dmidecode","xxx")
+
+    try {
+        CommandExecutor.execute(cmd, null, object : Appender {
+
+            override fun appendStdText(text: String) {
+                println(text)
+            }
+
+            override fun appendErrText(text: String) {
+                System.err.println(text)
+            }
+        }).getExecutionResult().let {
+            val commandLine = cmd.string()
+            val exitCode = it.exitValue()
+            println("command line: $commandLine\nexecution finished with exit code: $exitCode\n\n")
+        }
+    } catch (e: UnrecognisedCmdException) {
+        System.err.println(e)
+    }
+``` 
 
 ### 支持 RxJava 
 

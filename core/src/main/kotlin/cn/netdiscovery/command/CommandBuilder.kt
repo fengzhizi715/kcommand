@@ -134,8 +134,11 @@ class CommandBuilder() {
         @JvmStatic
         fun buildRawCommand(cmdLine: String, cmdArray: Array<String>): Command = CommandImpl(cmdLine, cmdArray)
 
+        /**
+         * 将普通的命令加上 sudo
+         */
         @JvmStatic
-        fun buildSuCommand(cmdLine:String,password:String = ""):Command {
+        fun buildSudoCommand(cmdLine:String,password:String = ""):Command {
 
             val list = mutableListOf<String>()
             list.add("sh")
