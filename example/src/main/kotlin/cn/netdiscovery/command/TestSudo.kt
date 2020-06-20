@@ -10,7 +10,7 @@ package cn.netdiscovery.command
  */
 fun main() {
 
-    val cmd = CommandBuilder.buildSudoCommand("dmidecode","xxx")
+    val cmd = CommandBuilder.buildSudoCommand("xxx","dmidecode")
 
     try {
         CommandExecutor.execute(cmd, null, object : Appender {

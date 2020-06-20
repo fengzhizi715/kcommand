@@ -139,11 +139,11 @@ class CommandBuilder() {
          */
         @JvmOverloads
         @JvmStatic
-        fun buildSudoCommand(cmdLine:String,password:String = ""): Command = CommandImpl(cmdLine, commandArray(password,cmdLine))
+        fun buildSudoCommand(password:String = "", cmdLine:String): Command = CommandImpl(cmdLine, commandArray(password,cmdLine))
 
         @JvmOverloads
         @JvmStatic
-        fun buildSudoCommand(cmdBlock:()->String,password:String = ""): Command {
+        fun buildSudoCommand(password:String = "",cmdBlock:()->String): Command {
             val cmdLine = cmdBlock.invoke()
             return CommandImpl(cmdLine, commandArray(password,cmdLine))
         }
@@ -151,8 +151,7 @@ class CommandBuilder() {
         private fun commandArray(password: String,cmdLine: String) =  mutableListOf<String>().apply {
             add("sh")
             add("-c")
-            val realCommand = "echo $password | sudo -S $cmdLine"
-            add(realCommand)
+            add("echo $password | sudo -S $cmdLine")
         }.toTypedArray()
     }
 }

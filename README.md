@@ -18,19 +18,19 @@ kcommand 是基于 Kotlin 特性实现的执行 Linux 命令的库
 # 下载：
 
 ```groovy
-implementation 'cn.netdiscovery.kcommand:kcommand-core:1.1.3'
+implementation 'cn.netdiscovery.kcommand:kcommand-core:1.1.4'
 ```
 
 ```groovy
-implementation 'cn.netdiscovery.kcommand:kcommand-rxjava2:1.1.3'
+implementation 'cn.netdiscovery.kcommand:kcommand-rxjava2:1.1.4'
 ```
 
 ```groovy
-implementation 'cn.netdiscovery.kcommand:kcommand-rxjava3:1.1.3'
+implementation 'cn.netdiscovery.kcommand:kcommand-rxjava3:1.1.4'
 ```
 
 ```groovy
-implementation 'cn.netdiscovery.kcommand:kcommand-coroutines:1.1.3'
+implementation 'cn.netdiscovery.kcommand:kcommand-coroutines:1.1.4'
 ```
 
 # 使用：
@@ -90,7 +90,7 @@ fun main() {
 ### 使用 sudo 
 
 ```kotlin
-    val cmd = CommandBuilder.buildSudoCommand("dmidecode","xxx")
+    val cmd = CommandBuilder.buildSudoCommand("xxx","dmidecode")
 
     try {
         CommandExecutor.execute(cmd, null, object : Appender {
@@ -181,7 +181,7 @@ fun main() {
     }
 ```
 
-其中 pResult.getResult() 返回的 [Result](https://github.com/fengzhizi715/kcommand/blob/master/core/src/main/kotlin/cn/netdiscovery/command/fuction/Result.kt) 可以点击查看
+其中 pResult.getResult() 返回的 [Result](https://github.com/fengzhizi715/kcommand/blob/master/core/src/main/kotlin/cn/netdiscovery/command/function/Result.kt) 可以点击查看
 
 
 ### Coroutines
