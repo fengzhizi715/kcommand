@@ -15,6 +15,16 @@ kcommand 是基于 Kotlin 特性实现的执行 Linux 命令的库
 * 支持 RxJava 2、RxJava 3、CompletableFuture、Coroutines
 
 
+# 最新版本
+
+模块|最新版本
+---|:-------------:
+kcommand-core|[ ![Download](https://api.bintray.com/packages/fengzhizi715/maven/kcommand-core/images/download.svg) ](https://bintray.com/fengzhizi715/maven/kcommand-core/_latestVersion)
+kcommand-rxjava2|[ ![Download](https://api.bintray.com/packages/fengzhizi715/maven/kcommand-rxjava2/images/download.svg) ](https://bintray.com/fengzhizi715/maven/kcommand-rxjava2/_latestVersion)
+kcommand-rxjava3|[ ![Download](https://api.bintray.com/packages/fengzhizi715/maven/kcommand-rxjava3/images/download.svg) ](https://bintray.com/fengzhizi715/maven/kcommand-rxjava3/_latestVersion)
+kcommand-coroutines|[ ![Download](https://api.bintray.com/packages/fengzhizi715/maven/kcommand-coroutines/images/download.svg) ](https://bintray.com/fengzhizi715/maven/kcommand-coroutines/_latestVersion)
+
+
 # 下载：
 
 ```groovy
