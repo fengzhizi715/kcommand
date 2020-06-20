@@ -135,18 +135,24 @@ class CommandBuilder() {
         fun buildRawCommand(cmdLine: String, cmdArray: Array<String>): Command = CommandImpl(cmdLine, cmdArray)
 
         /**
-         * 将普通的命令加上 sudo
+         * 在普通的命令前加上 sudo
          */
+        @JvmOverloads
         @JvmStatic
-        fun buildSudoCommand(cmdLine:String,password:String = ""):Command {
+        fun buildSudoCommand(cmdLine:String,password:String = ""): Command = CommandImpl(cmdLine, commandArray(password,cmdLine))
 
-            val list = mutableListOf<String>()
-            list.add("sh")
-            list.add("-c")
-            val realCommand = "echo $password | sudo -S $cmdLine"
-            list.add(realCommand)
-
-            return CommandImpl(cmdLine, list.toTypedArray())
+        @JvmOverloads
+        @JvmStatic
+        fun buildSudoCommand(cmdBlock:()->String,password:String = ""): Command {
+            val cmdLine = cmdBlock.invoke()
+            return CommandImpl(cmdLine, commandArray(password,cmdLine))
         }
+
+        private fun commandArray(password: String,cmdLine: String) =  mutableListOf<String>().apply {
+            add("sh")
+            add("-c")
+            val realCommand = "echo $password | sudo -S $cmdLine"
+            add(realCommand)
+        }.toTypedArray()
     }
 }
