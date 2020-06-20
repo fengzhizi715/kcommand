@@ -97,6 +97,10 @@ class CommandBuilder() {
         finalCommand.clear()
     }
 
+    /**
+     * Command 的实现类
+     * cmdLine 是表面是执行的命令，实际是执行的是 executableCmd
+     */
     private class CommandImpl(private val cmdLine: String, private val executableCmd: Array<String>) : Command {
 
         override fun executable(): List<String> = executableCmd.asList()
@@ -131,6 +135,9 @@ class CommandBuilder() {
             return CommandImpl(cmdLine, splitCmd(cmdLine))
         }
 
+        /**
+         * 便于使用一些复杂的操作符，例如使用重定向
+         */
         @JvmStatic
         fun buildRawCommand(cmdLine: String, cmdArray: Array<String>): Command = CommandImpl(cmdLine, cmdArray)
 

@@ -5,7 +5,7 @@ import cn.netdiscovery.command.function.get
 /**
  *
  * @FileName:
- *          cn.netdiscovery.command.Test
+ *          cn.netdiscovery.command.TestFunction
  * @author: Tony Shen
  * @date: 2020-05-19 20:03
  * @version: V1.0 <描述当前版本功能>

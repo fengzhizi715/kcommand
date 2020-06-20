@@ -3,7 +3,7 @@ package cn.netdiscovery.command
 /**
  *
  * @FileName:
- *          cn.netdiscovery.command.Adb
+ *          cn.netdiscovery.command.TestAdb
  * @author: Tony Shen
  * @date: 2020-05-20 21:02
  * @version: V1.0 <描述当前版本功能>

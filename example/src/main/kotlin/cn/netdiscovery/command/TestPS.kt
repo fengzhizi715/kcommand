@@ -3,7 +3,7 @@ package cn.netdiscovery.command
 /**
  *
  * @FileName:
- *          cn.netdiscovery.command.PS
+ *          cn.netdiscovery.command.TestPS
  * @author: Tony Shen
  * @date: 2020-05-20 20:53
  * @version: V1.0 <描述当前版本功能>

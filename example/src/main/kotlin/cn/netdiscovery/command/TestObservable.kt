@@ -5,7 +5,7 @@ import cn.netdiscovery.command.rxjava3.asObservable
 /**
  *
  * @FileName:
- *          cn.netdiscovery.command.Test
+ *          cn.netdiscovery.command.TestObservable
  * @author: Tony Shen
  * @date: 2020-05-21 00:14
  * @version: V1.0 <描述当前版本功能>
