@@ -60,6 +60,11 @@ object CommandExecutor {
     @JvmOverloads
     @JvmStatic
     @Throws(UnrecognisedCmdException::class)
+    fun executeSync(cmdLine: String, directory: File?=null, appender: Appender): ProcessResult = executeSync(CommandBuilder.buildRawCommand(cmdLine), directory, ExecutionOutputPrinter(appender))
+
+    @JvmOverloads
+    @JvmStatic
+    @Throws(UnrecognisedCmdException::class)
     fun executeSync(cmd: Command, directory: File?=null, outputPrinter: ExecutionOutputPrinter = ExecutionOutputPrinter.DEFAULT_OUTPUT_PRINTER): ProcessResult {
         val p = executeCommand(cmd, directory)
 
