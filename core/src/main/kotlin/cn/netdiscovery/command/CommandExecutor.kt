@@ -57,6 +57,23 @@ object CommandExecutor {
         return ProcessResult(cmd, p, futureReport)
     }
 
+    @JvmOverloads
+    @JvmStatic
+    @Throws(UnrecognisedCmdException::class)
+    fun executeSync(cmd: Command, directory: File?=null, outputPrinter: ExecutionOutputPrinter = ExecutionOutputPrinter.DEFAULT_OUTPUT_PRINTER): ProcessResult {
+        val p = executeCommand(cmd, directory)
+
+        val future1 = WORKERS.submit { outputPrinter.handleStdStream(p.inputStream) }
+        val future2 =  WORKERS.submit { outputPrinter.handleErrStream(p.errorStream) }
+        val futureReport = WORKERS.submit(ExecutionCallable(p, cmd))
+
+        futureReport.get()
+        future1.get()
+        future2.get()
+
+        return ProcessResult(cmd, p, futureReport)
+    }
+
     @Throws(UnrecognisedCmdException::class)
     private fun executeCommand(cmd: Command, directory: File?): Process {
         synchronized(pb) {
