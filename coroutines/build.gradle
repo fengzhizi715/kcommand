@@ -12,6 +12,7 @@ sourceCompatibility = 1.8
 def libs = rootProject.ext.libraries // 库
 
 repositories {
+    jcenter()
     mavenCentral()
 }
 

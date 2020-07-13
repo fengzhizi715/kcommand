@@ -25,6 +25,7 @@ dependencies {
 
     implementation "io.reactivex.rxjava3:rxjava:3.0.3"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:${libs.kotlinx_coroutines_core}"
+    implementation 'cn.netdiscovery.result:result:1.0.0'
 }
 
 compileKotlin {

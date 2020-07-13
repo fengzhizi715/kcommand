@@ -1,8 +1,8 @@
 package cn.netdiscovery.command
 
-import cn.netdiscovery.command.function.Result
-import cn.netdiscovery.command.function.resultFrom
-import java.lang.Exception
+
+import cn.netdiscovery.result.Result
+import cn.netdiscovery.result.resultFrom
 import java.util.concurrent.ExecutionException
 import java.util.concurrent.Future
 import java.util.concurrent.TimeUnit

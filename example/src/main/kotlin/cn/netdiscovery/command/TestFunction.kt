@@ -1,6 +1,6 @@
 package cn.netdiscovery.command
 
-import cn.netdiscovery.command.function.get
+import cn.netdiscovery.result.get
 
 /**
  *
