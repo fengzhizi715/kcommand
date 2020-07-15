@@ -5,6 +5,7 @@ import java.io.IOException
 import java.util.concurrent.Callable
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
+import java.util.concurrent.TimeUnit
 
 /**
  *
@@ -60,21 +61,36 @@ object CommandExecutor {
     @JvmOverloads
     @JvmStatic
     @Throws(UnrecognisedCmdException::class)
-    fun executeSync(cmdLine: String, directory: File?=null, appender: Appender): ProcessResult = executeSync(CommandBuilder.buildRawCommand(cmdLine), directory, ExecutionOutputPrinter(appender))
+    fun executeSync(cmdLine: String, directory: File?=null, appender: Appender): ProcessResult = executeSync(CommandBuilder.buildRawCommand(cmdLine), directory, outputPrinter = ExecutionOutputPrinter(appender))
 
     @JvmOverloads
     @JvmStatic
     @Throws(UnrecognisedCmdException::class)
-    fun executeSync(cmd: Command, directory: File?=null, outputPrinter: ExecutionOutputPrinter = ExecutionOutputPrinter.DEFAULT_OUTPUT_PRINTER): ProcessResult {
+    fun executeSync(cmd: Command, directory: File?=null, timeout:Long?=null,unit: TimeUnit?=null, outputPrinter: ExecutionOutputPrinter = ExecutionOutputPrinter.DEFAULT_OUTPUT_PRINTER): ProcessResult {
         val p = executeCommand(cmd, directory)
 
         val future1 = WORKERS.submit { outputPrinter.handleStdStream(p.inputStream) }
         val future2 =  WORKERS.submit { outputPrinter.handleErrStream(p.errorStream) }
         val futureReport = WORKERS.submit(ExecutionCallable(p, cmd))
 
-        futureReport.get()
-        future1.get()
-        future2.get()
+        if (timeout!=null && unit!=null) {
+            try {
+                futureReport.get(timeout,unit)
+                future1.get(timeout,unit)
+                future2.get(timeout,unit)
+            } catch (e:Exception) {
+                p.destroyForcibly()
+                try {
+                    p.waitFor()
+                } catch (e: InterruptedException) {
+                    //do nothing.
+                }
+            }
+        } else {
+            futureReport.get()
+            future1.get()
+            future2.get()
+        }
 
         return ProcessResult(cmd, p, futureReport)
     }
