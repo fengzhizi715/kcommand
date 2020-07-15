@@ -191,7 +191,7 @@ fun main() {
     }
 ```
 
-其中 pResult.getResult() 返回的 [Result](https://github.com/fengzhizi715/kcommand/blob/master/core/src/main/kotlin/cn/netdiscovery/command/function/Result.kt) 可以点击查看
+其中 pResult.getResult() 返回的 [Result](https://github.com/fengzhizi715/Result) 可以点击查看
 
 
 ### Coroutines
