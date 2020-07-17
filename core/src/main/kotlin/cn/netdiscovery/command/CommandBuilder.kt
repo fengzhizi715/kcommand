@@ -130,35 +130,59 @@ class CommandBuilder() {
         fun buildRawCommand(cmdLine: String): Command = CommandImpl(cmdLine, splitCmd(cmdLine))
 
         @JvmStatic
-        fun buildRawCommand(cmdBlock: ()->String): Command {
-            val cmdLine = cmdBlock.invoke()
+        fun buildRawCommand(cmd: cmdFunction): Command {
+            val cmdLine = cmd.invoke()
             return CommandImpl(cmdLine, splitCmd(cmdLine))
         }
 
         /**
-         * 便于使用一些复杂的操作符，例如使用重定向
+         * 构建原始的命令
          */
         @JvmStatic
         fun buildRawCommand(cmdLine: String, cmdArray: Array<String>): Command = CommandImpl(cmdLine, cmdArray)
 
         /**
-         * 在普通的命令前加上 sudo
+         * 使用管理员账号执行该命令
          */
         @JvmOverloads
         @JvmStatic
-        fun buildSudoCommand(password:String = "", cmdLine:String): Command = CommandImpl(cmdLine, commandArray(password,cmdLine))
+        fun buildSudoCommand(password:String = "", cmdLine:String): Command = CommandImpl(cmdLine, sudoCommandArray(password,cmdLine))
 
+        /**
+         * 使用管理员账号执行该命令
+         */
         @JvmOverloads
         @JvmStatic
-        fun buildSudoCommand(password:String = "",cmdBlock:()->String): Command {
-            val cmdLine = cmdBlock.invoke()
-            return CommandImpl(cmdLine, commandArray(password,cmdLine))
+        fun buildSudoCommand(password:String = "",cmd:cmdFunction): Command {
+            val cmdLine = cmd.invoke()
+            return CommandImpl(cmdLine, sudoCommandArray(password,cmdLine))
         }
 
-        private fun commandArray(password: String,cmdLine: String) =  mutableListOf<String>().apply {
+        /**
+         * 便于使用一些复杂的操作符，例如使用管道命令
+         */
+        @JvmStatic
+        fun buildCompositeCommand(cmdLine: String): Command = CommandImpl(cmdLine, compositeCommandArray(cmdLine))
+
+        /**
+         * 便于使用一些复杂的操作符，例如使用管道命令
+         */
+        @JvmStatic
+        fun buildCompositeCommand(cmd:cmdFunction): Command {
+            val cmdLine = cmd.invoke()
+            return CommandImpl(cmdLine, compositeCommandArray(cmdLine))
+        }
+
+        private fun sudoCommandArray(password: String,cmdLine: String) =  mutableListOf<String>().apply {
             add("sh")
             add("-c")
             add("echo $password | sudo -S $cmdLine")
+        }.toTypedArray()
+
+        private fun compositeCommandArray(cmdLine: String) =  mutableListOf<String>().apply {
+            add("sh")
+            add("-c")
+            add(cmdLine)
         }.toTypedArray()
     }
 }
