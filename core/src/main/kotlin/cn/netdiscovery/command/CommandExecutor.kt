@@ -61,7 +61,7 @@ object CommandExecutor {
     @JvmOverloads
     @JvmStatic
     @Throws(UnrecognisedCmdException::class)
-    fun executeSync(cmdLine: String, directory: File?=null, appender: Appender): ProcessResult = executeSync(CommandBuilder.buildRawCommand(cmdLine), directory, outputPrinter = ExecutionOutputPrinter(appender))
+    fun executeSync(cmd: Command, directory: File?=null, timeout:Long?=null,unit: TimeUnit?=null, appender: Appender): ProcessResult = executeSync(cmd, directory, timeout, unit, ExecutionOutputPrinter(appender))
 
     @JvmOverloads
     @JvmStatic
