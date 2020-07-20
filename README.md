@@ -101,7 +101,11 @@ fun main() {
 }
 ```
 
-### 使用 sudo 
+### 使用 sudo
+
+支持使用 sudo 命令执行一些管理员使用的命令。
+
+通过使用 buildSudoCommand() 方法构建 Command，需要传递管理员的密码和执行的命令。
 
 ```kotlin
     val cmd = CommandBuilder.buildSudoCommand("xxx","dmidecode")
@@ -127,6 +131,8 @@ fun main() {
 ``` 
 
 ### 支持 RxJava 
+
+通过 ProcessResult 的扩展函数`asObservable()`等，支持 RxJava2、3
 
 ```kotlin
     val list = mutableListOf<String>()
@@ -167,6 +173,9 @@ fun main() {
 
 ### 支持函数式
 
+通过 ProcessResult 的`getResult()`返回的 [Result](https://github.com/fengzhizi715/Result) 支持函数式，
+[Result](https://github.com/fengzhizi715/Result) 可以点击查看。
+
 ```kotlin
     val cmd = getPsCmd()
 
@@ -195,10 +204,10 @@ fun main() {
     }
 ```
 
-其中 pResult.getResult() 返回的 [Result](https://github.com/fengzhizi715/Result) 可以点击查看
-
 
 ### Coroutines
+
+通过 ProcessResult 的扩展函数`asFlow()`返回的 
 
 ```kotlin
 fun main() = runBlocking{
