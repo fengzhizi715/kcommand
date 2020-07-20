@@ -130,7 +130,25 @@ fun main() {
     } catch (e: UnrecognisedCmdException) {
         System.err.println(e)
     }
-``` 
+```
+
+### 支持 CompletableFuture
+
+通过 ProcessResult 的扩展函数`asCompletableFuture()`等，支持 CompletableFuture
+
+```kotlin
+    val cmd = getPsCmd()
+
+    try {
+        val executionResult = CommandExecutor.execute(cmd, null).asCompletableFuture().get()
+
+        val commandLine = cmd.string()
+        val exitCode = executionResult.exitValue()
+        println("command line: $commandLine\nexecution finished with exit code: $exitCode\n\n")
+    } catch (e: UnrecognisedCmdException) {
+        System.err.println(e)
+    }
+```
 
 ### 支持 RxJava 
 
@@ -233,7 +251,7 @@ fun main() = runBlocking{
 
 ### 同步返回结果
 
-使用 CommandExecutor.executeSync() 支持同步返回结果，其实 kcommand 底层使用的是线程池，只是等待线程执行完成将结果同步返回到 Append。 
+使用 CommandExecutor.executeSync() 支持同步返回结果，其实 kcommand 底层使用的是线程池，只是等待线程执行完成后将结果同步返回到 Append。 
 
 executeSync() 方法还支持超时机制，最后2个参数分别是超时的时间、时间的单位。
 
