@@ -47,7 +47,9 @@ implementation 'cn.netdiscovery.kcommand:kcommand-coroutines:1.2.2'
 
 ### 基本用法
 
-所使用的命令支持携带参数
+通过 CommandBuilder 类构建所需执行的命令，这些命令都支持携带参数。
+
+然后通过 CommandExecutor.execute() 执行命令。
 
 ```kotlin
     val cmd = CommandBuilder("ping").addArg("baidu.com").build()
