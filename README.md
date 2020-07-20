@@ -45,7 +45,9 @@ implementation 'cn.netdiscovery.kcommand:kcommand-coroutines:1.2.2'
 
 # 使用：
 
-### basic
+### 基本用法
+
+所使用的命令支持携带参数
 
 ```kotlin
     val cmd = CommandBuilder("ping").addArg("baidu.com").build()
@@ -57,7 +59,9 @@ implementation 'cn.netdiscovery.kcommand:kcommand-coroutines:1.2.2'
     }
 ```
 
-### 返回结果
+### 获取返回结果
+
+可以使用 Append 获取命令执行的结果。
 
 ```kotlin
 fun getPsCmd():Command {
