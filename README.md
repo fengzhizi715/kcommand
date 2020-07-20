@@ -61,7 +61,7 @@ implementation 'cn.netdiscovery.kcommand:kcommand-coroutines:1.2.2'
 
 ### 获取返回结果
 
-可以使用 Append 获取命令执行的结果。
+可以使用 Append 在`回调`中获取命令执行的内容，使用`getExecutionResult()`获取命令的执行成功与否。
 
 ```kotlin
 fun getPsCmd():Command {
