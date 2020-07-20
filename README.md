@@ -207,7 +207,7 @@ fun main() {
 
 ### Coroutines
 
-通过 ProcessResult 的扩展函数`asFlow()`返回的 
+通过 ProcessResult 的扩展函数`asFlow()`支持协程。
 
 ```kotlin
 fun main() = runBlocking{
@@ -227,6 +227,28 @@ fun main() = runBlocking{
         System.err.println(e)
     }
 }
+```
+
+### 同步返回结果
+
+使用 CommandExecutor.executeSync() 支持同步返回结果，其实 kcommand 底层使用的是线程池，只是等待线程执行完成将结果同步返回到 Append。 
+
+executeSync() 方法还支持超时机制，最后2个参数分别是超时的时间、时间的单位。
+
+```kotlin
+    val cmd = CommandBuilder("ping").addArg("baidu.com").build()
+
+    try {
+        CommandExecutor.executeSync(cmd, null,5, TimeUnit.SECONDS).getExecutionResult().let {
+
+            val commandLine = it.command().string()
+            val exitCode = it.exitValue()
+
+            println("command line: $commandLine\nexecution finished with exit code: $exitCode\n\n")
+        }
+    } catch (e: UnrecognisedCmdException) {
+        System.err.println(e)
+    }
 ```
 
 联系方式
