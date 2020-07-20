@@ -271,6 +271,26 @@ executeSync() 方法还支持超时机制，最后2个参数分别是超时的�
     }
 ```
 
+### 异步超时
+
+通过 getExecutionResult() 方法进行异步超时，该方法在调用 CommandExecutor.executeSync() 会无效。
+
+```kotlin
+    val cmd = CommandBuilder("ping").addArg("baidu.com").build()
+
+    try {
+        CommandExecutor.execute(cmd, null).getExecutionResult(5,TimeUnit.SECONDS).let {
+
+            val commandLine = it.command().string()
+            val exitCode = it.exitValue()
+
+            println("command line: $commandLine\nexecution finished with exit code: $exitCode\n\n")
+        }
+    } catch (e: UnrecognisedCmdException) {
+        System.err.println(e)
+    }
+```
+
 联系方式
 ===
 
