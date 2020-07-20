@@ -127,12 +127,12 @@ class CommandBuilder() {
         }
 
         @JvmStatic
-        fun buildRawCommand(cmdLine: String): Command = CommandImpl(cmdLine, splitCmd(cmdLine))
+        fun buildRawCommand(cmdLine: String): Command = buildRawCommand(cmdLine, splitCmd(cmdLine))
 
         @JvmStatic
         fun buildRawCommand(cmd: cmdFunction): Command {
             val cmdLine = cmd.invoke()
-            return CommandImpl(cmdLine, splitCmd(cmdLine))
+            return buildRawCommand(cmdLine, splitCmd(cmdLine))
         }
 
         /**
@@ -146,7 +146,7 @@ class CommandBuilder() {
          */
         @JvmOverloads
         @JvmStatic
-        fun buildSudoCommand(password:String = "", cmdLine:String): Command = CommandImpl(cmdLine, sudoCommandArray(password,cmdLine))
+        fun buildSudoCommand(password:String = "", cmdLine:String): Command = buildRawCommand(cmdLine, sudoCommandArray(password,cmdLine))
 
         /**
          * 使用管理员账号执行该命令
@@ -155,14 +155,14 @@ class CommandBuilder() {
         @JvmStatic
         fun buildSudoCommand(password:String = "",cmd:cmdFunction): Command {
             val cmdLine = cmd.invoke()
-            return CommandImpl(cmdLine, sudoCommandArray(password,cmdLine))
+            return buildRawCommand(cmdLine, sudoCommandArray(password,cmdLine))
         }
 
         /**
          * 便于使用一些复杂的操作符，例如使用管道命令
          */
         @JvmStatic
-        fun buildCompositeCommand(cmdLine: String): Command = CommandImpl(cmdLine, compositeCommandArray(cmdLine))
+        fun buildCompositeCommand(cmdLine: String): Command = buildRawCommand(cmdLine, compositeCommandArray(cmdLine))
 
         /**
          * 便于使用一些复杂的操作符，例如使用管道命令
@@ -170,7 +170,7 @@ class CommandBuilder() {
         @JvmStatic
         fun buildCompositeCommand(cmd:cmdFunction): Command {
             val cmdLine = cmd.invoke()
-            return CommandImpl(cmdLine, compositeCommandArray(cmdLine))
+            return buildRawCommand(cmdLine, compositeCommandArray(cmdLine))
         }
 
         private fun sudoCommandArray(password: String,cmdLine: String) =  mutableListOf<String>().apply {
