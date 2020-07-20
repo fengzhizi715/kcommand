@@ -103,6 +103,33 @@ fun main() {
 }
 ```
 
+### 使用复合命令
+
+可以使用 CommandBuilder.buildCompositeCommand() 构造所需的复合命令，例如管道命令等
+
+```kotlin
+    val cmd = CommandBuilder.buildCompositeCommand("ps aux | grep java")
+
+    try {
+        CommandExecutor.execute(cmd, null, object : Appender {
+
+            override fun appendStdText(text: String) {
+                println(text)
+            }
+
+            override fun appendErrText(text: String) {
+                System.err.println(text)
+            }
+        }).getExecutionResult().let {
+            val commandLine = cmd.string()
+            val exitCode = it.exitValue()
+            println("command line: $commandLine\nexecution finished with exit code: $exitCode\n\n")
+        }
+    } catch (e: UnrecognisedCmdException) {
+        System.err.println(e)
+    }
+```
+
 ### 使用 sudo
 
 支持使用 sudo 命令执行一些管理员使用的命令。
