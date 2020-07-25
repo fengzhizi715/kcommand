@@ -47,9 +47,9 @@ implementation 'cn.netdiscovery.kcommand:kcommand-coroutines:1.2.3'
 
 ### 基本用法
 
-通过 CommandBuilder 类构建所需执行的命令，这些命令都支持携带参数。
+通过 CommandBuilder 类构建所需执行的命令，这些命令支持携带参数。
 
-然后通过 CommandExecutor.execute() 执行命令。
+然后，通过 CommandExecutor.execute() 执行命令。
 
 ```kotlin
     val cmd = CommandBuilder("ping").addArg("baidu.com").build()
@@ -63,7 +63,7 @@ implementation 'cn.netdiscovery.kcommand:kcommand-coroutines:1.2.3'
 
 ### 获取返回结果
 
-可以使用 Append 在`回调`中获取命令执行的内容，使用`getExecutionResult()`获取命令的执行成功与否。
+可以使用 Append 在`回调`中获取命令执行的内容，使用`getExecutionResult()`判断命令的执行成功与否。
 
 ```kotlin
 fun getPsCmd():Command {
