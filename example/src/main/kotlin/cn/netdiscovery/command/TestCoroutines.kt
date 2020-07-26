@@ -14,7 +14,7 @@ import kotlinx.coroutines.runBlocking
  */
 fun main() = runBlocking{
 
-    val cmd = getPsCmd()
+    val cmd = CommandBuilder.buildCompositeCommand("ps aux | grep java")
 
     try {
         CommandExecutor.execute(cmd, null)

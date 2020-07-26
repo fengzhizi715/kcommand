@@ -12,7 +12,7 @@ import cn.netdiscovery.result.get
  */
 fun main() {
 
-    val cmd = getPsCmd()
+    val cmd = CommandBuilder.buildCompositeCommand("ps aux | grep java")
 
     try {
         val result = CommandExecutor.execute(cmd, null, object : Appender {
