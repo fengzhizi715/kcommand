@@ -164,7 +164,7 @@ fun main() {
 通过 ProcessResult 的扩展函数`asCompletableFuture()`等，支持 CompletableFuture
 
 ```kotlin
-    val cmd = getPsCmd()
+    val cmd = CommandBuilder.buildCompositeCommand("ps aux | grep java")
 
     try {
         val executionResult = CommandExecutor.execute(cmd, null).asCompletableFuture().get()
@@ -182,15 +182,7 @@ fun main() {
 通过 ProcessResult 的扩展函数`asObservable()`等，支持 RxJava2、3
 
 ```kotlin
-    val list = mutableListOf<String>()
-    list.add("sh")
-    list.add("-c")
-
-    val psCommand = "ps aux | grep java"
-
-    list.add(psCommand)
-
-    val cmd = CommandBuilder.buildRawCommand(psCommand, list.toTypedArray())
+    val cmd = CommandBuilder.buildCompositeCommand("ps aux | grep java")
 
     val eop = ExecutionOutputPrinter(object : Appender {
 
@@ -224,7 +216,7 @@ fun main() {
 [Result](https://github.com/fengzhizi715/Result) 可以点击查看。
 
 ```kotlin
-    val cmd = getPsCmd()
+    val cmd = CommandBuilder.buildCompositeCommand("ps aux | grep java")
 
     try {
         val pResult = CommandExecutor.execute(cmd, null, object : Appender {
@@ -259,7 +251,7 @@ fun main() {
 ```kotlin
 fun main() = runBlocking{
 
-    val cmd = getPsCmd()
+    val cmd = CommandBuilder.buildCompositeCommand("ps aux | grep java")
 
     try {
         CommandExecutor.execute(cmd, null)
