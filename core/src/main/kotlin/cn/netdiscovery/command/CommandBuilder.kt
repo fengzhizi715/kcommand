@@ -159,18 +159,33 @@ class CommandBuilder() {
         }
 
         /**
-         * 便于使用一些复杂的操作符，例如使用管道命令
+         * 便于执行一些复杂的 Linux 操作命令，例如使用管道命令
          */
         @JvmStatic
         fun buildCompositeCommand(cmdLine: String): Command = buildRawCommand(cmdLine, compositeCommandArray(cmdLine))
 
         /**
-         * 便于使用一些复杂的操作符，例如使用管道命令
+         * 便于执行一些复杂的 Linux 操作命令，例如使用管道命令
          */
         @JvmStatic
         fun buildCompositeCommand(cmd:cmdFunction): Command {
             val cmdLine = cmd.invoke()
             return buildRawCommand(cmdLine, compositeCommandArray(cmdLine))
+        }
+
+        /**
+         * 执行 Windows 命令
+         */
+        @JvmStatic
+        fun buildWindowsCommand(cmdLine: String): Command = buildRawCommand(cmdLine, windowsCommandArray(cmdLine))
+
+        /**
+         * 执行 Windows 命令
+         */
+        @JvmStatic
+        fun buildWindowsCommand(cmd:cmdFunction): Command {
+            val cmdLine = cmd.invoke()
+            return buildRawCommand(cmdLine, windowsCommandArray(cmdLine))
         }
 
         private fun sudoCommandArray(password: String,cmdLine: String) =  mutableListOf<String>().apply {
@@ -182,6 +197,12 @@ class CommandBuilder() {
         private fun compositeCommandArray(cmdLine: String) =  mutableListOf<String>().apply {
             add("sh")
             add("-c")
+            add(cmdLine)
+        }.toTypedArray()
+
+        private fun windowsCommandArray(cmdLine: String) =  mutableListOf<String>().apply {
+            add("cmd.exe")
+            add("/c")
             add(cmdLine)
         }.toTypedArray()
     }

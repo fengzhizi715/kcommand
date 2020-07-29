@@ -28,19 +28,19 @@ kcommand-coroutines|[ ![Download](https://api.bintray.com/packages/fengzhizi715/
 # 下载：
 
 ```groovy
-implementation 'cn.netdiscovery.kcommand:kcommand-core:1.2.3'
+implementation 'cn.netdiscovery.kcommand:kcommand-core:1.2.4'
 ```
 
 ```groovy
-implementation 'cn.netdiscovery.kcommand:kcommand-rxjava2:1.2.3'
+implementation 'cn.netdiscovery.kcommand:kcommand-rxjava2:1.2.4'
 ```
 
 ```groovy
-implementation 'cn.netdiscovery.kcommand:kcommand-rxjava3:1.2.3'
+implementation 'cn.netdiscovery.kcommand:kcommand-rxjava3:1.2.4'
 ```
 
 ```groovy
-implementation 'cn.netdiscovery.kcommand:kcommand-coroutines:1.2.3'
+implementation 'cn.netdiscovery.kcommand:kcommand-coroutines:1.2.4'
 ```
 
 # 使用：
@@ -309,12 +309,6 @@ executeSync() 方法还支持超时机制，最后2个参数分别是超时的�
         System.err.println(e)
     }
 ```
-
-# TODO List：
-
-* 支持 Windows 命令的执行
-
-
 
 联系方式
 ===
