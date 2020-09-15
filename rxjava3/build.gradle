@@ -9,6 +9,8 @@ version '1.0-SNAPSHOT'
 
 sourceCompatibility = 1.8
 
+def libs = rootProject.ext.libraries // 库
+
 repositories {
     jcenter()
     mavenCentral()
@@ -20,7 +22,7 @@ dependencies {
 
     implementation project(":core")
 
-    compileOnly "io.reactivex.rxjava3:rxjava:3.0.3"
+    compileOnly "io.reactivex.rxjava3:rxjava:${libs.rxjava}"
 }
 
 compileKotlin {
