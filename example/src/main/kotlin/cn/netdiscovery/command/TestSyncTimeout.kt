@@ -15,7 +15,14 @@ fun main() {
     val cmd = CommandBuilder("ping").addArg("baidu.com").build()
 
     try {
-        CommandExecutor.executeSync(cmd, null,5, TimeUnit.SECONDS).getExecutionResult().let {
+        CommandExecutor.executeSync(cmd, null,5, TimeUnit.SECONDS,object :Appender{
+            override fun appendStdText(text: String) {
+            }
+
+            override fun appendErrText(text: String) {
+            }
+
+        }).getExecutionResult().let {
 
             val commandLine = it.command().string()
             val exitCode = it.exitValue()
