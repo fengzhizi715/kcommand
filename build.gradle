@@ -24,7 +24,7 @@ dependencies {
 buildscript {
 
     ext.kotlin_version = '1.4.0'
-    ext.command_version = '1.2.5'
+    ext.command_version = '1.2.6'
 
     repositories {
         jcenter()
