@@ -61,12 +61,12 @@ object CommandExecutor {
     @JvmOverloads
     @JvmStatic
     @Throws(UnrecognisedCmdException::class)
-    fun executeSync(cmd: Command, directory: File?=null, timeout:Long?=null,unit: TimeUnit?=null, appender: Appender): ProcessResult = executeSync(cmd, directory, timeout, unit, ExecutionOutputPrinter(appender))
+    fun executeSync(cmd: Command, directory: File?=null, timeout:Long?=null,unit: TimeUnit?=null, appender: Appender): ProcessResult = executeSyncOutputPrinter(cmd, directory, timeout, unit, ExecutionOutputPrinter(appender))
 
     @JvmOverloads
     @JvmStatic
     @Throws(UnrecognisedCmdException::class)
-    fun executeSync(cmd: Command, directory: File?=null, timeout:Long?=null,unit: TimeUnit?=null, outputPrinter: ExecutionOutputPrinter = ExecutionOutputPrinter.DEFAULT_OUTPUT_PRINTER): ProcessResult {
+    fun executeSyncOutputPrinter(cmd: Command, directory: File?=null, timeout:Long?=null,unit: TimeUnit?=null, outputPrinter: ExecutionOutputPrinter = ExecutionOutputPrinter.DEFAULT_OUTPUT_PRINTER): ProcessResult {
         val p = executeCommand(cmd, directory)
 
         val future1 = WORKERS.submit { outputPrinter.handleStdStream(p.inputStream) }
