@@ -14,7 +14,7 @@ fun main() {
 
     val cmd = CommandBuilder.buildCompositeCommand("ps aux | grep java")
 
-    val executionResult = CommandExecutor.execute(cmd, null).asCompletableFuture().get()
+    val executionResult = CommandExecutor.execute(cmd).asCompletableFuture().get()
 
     val commandLine = cmd.string()
     val exitCode = executionResult.exitValue()

@@ -16,7 +16,7 @@ fun main() = runBlocking{
 
     val cmd = CommandBuilder.buildCompositeCommand("ps aux | grep java")
 
-    CommandExecutor.execute(cmd, null)
+    CommandExecutor.execute(cmd)
         .asFlow()
         .collect{
             val commandLine = cmd.string()

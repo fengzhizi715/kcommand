@@ -14,7 +14,7 @@ fun main() {
 
     val cmd = CommandBuilder.buildCompositeCommand("ps aux | grep java")
 
-    CommandExecutor.execute(cmd, null)
+    CommandExecutor.execute(cmd)
         .asObservable()
         .subscribe {
 

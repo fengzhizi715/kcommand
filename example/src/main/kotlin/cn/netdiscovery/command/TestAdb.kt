@@ -12,15 +12,7 @@ fun main() {
 
     val cmd = CommandBuilder("adb").addArg("devices").build()
 
-    CommandExecutor.execute(cmd, appender = object : Appender{
-        override fun appendStdText(text: String) {
-            println(text)
-        }
-
-        override fun appendErrText(text: String) {
-            System.err.println(text)
-        }
-    }).getExecutionResult().let {
+    CommandExecutor.execute(cmd).getExecutionResult().let {
         val commandLine = cmd.string()
         val exitCode = it.exitValue()
         println("command line: $commandLine\nexecution finished with exit code: $exitCode\n\n")

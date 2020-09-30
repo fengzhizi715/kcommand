@@ -14,16 +14,7 @@ fun main() {
 
     val cmd = CommandBuilder.buildCompositeCommand("ps aux | grep java")
 
-    val result = CommandExecutor.execute(cmd, null, object : Appender {
-
-        override fun appendStdText(text: String) {
-            println(text)
-        }
-
-        override fun appendErrText(text: String) {
-            System.err.println(text)
-        }
-    }).getResult().get()
+    val result = CommandExecutor.execute(cmd).getResult().get()
 
     if (result is ExecutionResult) {
 
