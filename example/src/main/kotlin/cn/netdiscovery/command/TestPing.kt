@@ -10,7 +10,7 @@ package cn.netdiscovery.command
  */
 fun main() {
 
-    val cmd = CommandBuilder("ping").addArg("baidu.com").build()
-
-    CommandExecutor.execute(cmd)
+    CommandExecutor.execute{
+        CommandBuilder("ping").addArg("baidu.com").build()
+    }
 }
