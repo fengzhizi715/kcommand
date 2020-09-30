@@ -47,33 +47,27 @@ class ProcessResult(
      * 返回 ExecutionResult （会确保命令已经执行完毕）
      * ExecutionResult 的 exitValue() 会返回命令执行成功与否。(0 表示执行成功)
      */
-    fun getExecutionResult(): ExecutionResult {
-        return try {
-            futureResult.get()
-        } catch (e: InterruptedException) {
-            ExecutionResult.makeReport(cmd,1)
-        } catch (e: ExecutionException) {
-            ExecutionResult.makeReport(cmd,1)
-        }
+    fun getExecutionResult(): ExecutionResult = try {
+        futureResult.get()
+    } catch (e: InterruptedException) {
+        ExecutionResult.makeReport(cmd,-1)
+    } catch (e: ExecutionException) {
+        ExecutionResult.makeReport(cmd,-1)
     }
 
     /**
      * 增加超时机制
      */
-    fun getExecutionResult(timeout:Long,unit:TimeUnit): ExecutionResult {
-        var result: ExecutionResult? = null
-        try {
-            result = futureResult.get(timeout,unit)
-        } catch (e: InterruptedException) {
-            result = ExecutionResult.makeReport(cmd,1)
-        } catch (e: ExecutionException) {
-            result = ExecutionResult.makeReport(cmd,1)
-        } catch (e:TimeoutException) {
-            futureResult.cancel(true)
-            val exitValue = abort()
-            result = ExecutionResult.makeReport(cmd,exitValue)
-        }
-        return result!!
+    fun getExecutionResult(timeout:Long,unit:TimeUnit): ExecutionResult = try {
+        futureResult.get(timeout,unit)
+    } catch (e: InterruptedException) {
+        ExecutionResult.makeReport(cmd,-1)
+    } catch (e: ExecutionException) {
+        ExecutionResult.makeReport(cmd,-1)
+    } catch (e:TimeoutException) {
+        futureResult.cancel(true)
+        val exitValue = abort()
+        ExecutionResult.makeReport(cmd,exitValue)
     }
 
     /**

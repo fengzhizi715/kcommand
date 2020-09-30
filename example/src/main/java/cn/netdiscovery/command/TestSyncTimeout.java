@@ -15,7 +15,7 @@ public class TestSyncTimeout {
     public static void main(String[] args){
         Command cmd = new CommandBuilder("ping").addArg("baidu.com").build();
 
-        CommandExecutor.executeSync(cmd, null, 5L, TimeUnit.SECONDS, new Appender() {
+        ExecutionResult result = CommandExecutor.executeSync(cmd, null, 5L, TimeUnit.SECONDS, new Appender() {
             @Override
             public void appendStdText(@NotNull String text) {
 
@@ -26,5 +26,8 @@ public class TestSyncTimeout {
 
             }
         }).getExecutionResult();
+
+        System.out.println(result.command());
+        System.out.println(result.exitValue());
     }
 }
