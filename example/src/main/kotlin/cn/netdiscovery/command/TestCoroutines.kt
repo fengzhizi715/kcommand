@@ -16,16 +16,11 @@ fun main() = runBlocking{
 
     val cmd = CommandBuilder.buildCompositeCommand("ps aux | grep java")
 
-    try {
-        CommandExecutor.execute(cmd, null)
-            .asFlow()
-            .collect{
-                val commandLine = cmd.string()
-                val exitCode = it.exitValue()
-                println("command line: $commandLine\nexecution finished with exit code: $exitCode\n\n")
-            }
-
-    } catch (e: UnrecognisedCmdException) {
-        System.err.println(e)
-    }
+    CommandExecutor.execute(cmd, null)
+        .asFlow()
+        .collect{
+            val commandLine = cmd.string()
+            val exitCode = it.exitValue()
+            println("command line: $commandLine\nexecution finished with exit code: $exitCode\n\n")
+        }
 }

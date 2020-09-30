@@ -12,9 +12,5 @@ fun main() {
 
     val cmd = CommandBuilder("ping").addArg("baidu.com").build()
 
-    try {
-        CommandExecutor.execute(cmd, null)
-    } catch (e: UnrecognisedCmdException) {
-        System.err.println(e)
-    }
+    CommandExecutor.execute(cmd)
 }

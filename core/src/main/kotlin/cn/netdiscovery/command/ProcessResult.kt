@@ -18,25 +18,29 @@ import java.util.concurrent.TimeoutException
  */
 class ProcessResult(
     private val cmd: Command,
-    private val process: Process,
+    private val process: Process?=null,
     private val futureResult: Future<ExecutionResult>
 ) {
 
-    private fun isAlive(): Boolean = process.isAlive
+    private fun isAlive(): Boolean = process?.isAlive?:false
 
     /**
      * 命令停止执行
      */
     fun abort(): Int {
-        if (isAlive()) {
-            process.destroyForcibly()
-            try {
-                process.waitFor()
-            } catch (e: InterruptedException) {
-                //do nothing.
+        if (process!=null) {
+            if (isAlive()) {
+                process.destroyForcibly()
+                try {
+                    process.waitFor()
+                } catch (e: InterruptedException) {
+                    //do nothing.
+                }
             }
+            return process.exitValue()
+        } else {
+            return -1;
         }
-        return process.exitValue()
     }
 
     /**
@@ -44,15 +48,13 @@ class ProcessResult(
      * ExecutionResult 的 exitValue() 会返回命令执行成功与否。(0 表示执行成功)
      */
     fun getExecutionResult(): ExecutionResult {
-        var result: ExecutionResult? = null
-        try {
-            result = futureResult.get()
+        return try {
+            futureResult.get()
         } catch (e: InterruptedException) {
-            result = ExecutionResult.makeReport(cmd,1)
+            ExecutionResult.makeReport(cmd,1)
         } catch (e: ExecutionException) {
-            result = ExecutionResult.makeReport(cmd,1)
+            ExecutionResult.makeReport(cmd,1)
         }
-        return result!!
     }
 
     /**

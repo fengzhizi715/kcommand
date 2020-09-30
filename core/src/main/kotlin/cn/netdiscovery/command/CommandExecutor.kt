@@ -2,10 +2,7 @@ package cn.netdiscovery.command
 
 import java.io.File
 import java.io.IOException
-import java.util.concurrent.Callable
-import java.util.concurrent.ExecutorService
-import java.util.concurrent.Executors
-import java.util.concurrent.TimeUnit
+import java.util.concurrent.*
 
 /**
  *
@@ -31,31 +28,49 @@ object CommandExecutor {
     }
 
     @JvmStatic
-    @Throws(UnrecognisedCmdException::class)
     fun execute(cmdLine: String): ProcessResult = execute(CommandBuilder.buildRawCommand(cmdLine), null )
 
     @JvmOverloads
     @JvmStatic
-    @Throws(UnrecognisedCmdException::class)
     fun execute(cmdLine: String, directory: File?=null, appender: Appender): ProcessResult = execute(CommandBuilder.buildRawCommand(cmdLine), directory, ExecutionOutputPrinter(appender))
 
     @JvmOverloads
     @JvmStatic
-    @Throws(UnrecognisedCmdException::class)
     fun execute(cmd: Command, directory: File?=null, appender: Appender): ProcessResult = execute(cmd, directory, ExecutionOutputPrinter(appender))
 
     @JvmStatic
-    @Throws(UnrecognisedCmdException::class)
     inline fun execute(cmd: ()->Command): ProcessResult = execute(cmd.invoke())
 
     @JvmOverloads
     @JvmStatic
-    @Throws(UnrecognisedCmdException::class)
     fun execute(cmd: Command, directory: File?=null, outputPrinter: ExecutionOutputPrinter = ExecutionOutputPrinter.DEFAULT_OUTPUT_PRINTER): ProcessResult {
-        val p = executeCommand(cmd, directory)
-        recordOutput(p, outputPrinter)
-        val futureReport = WORKERS.submit(ExecutionCallable(p, cmd))
-        return ProcessResult(cmd, p, futureReport)
+
+        try {
+            val p = executeCommand(cmd, directory)
+            recordOutput(p, outputPrinter)
+            val futureReport = WORKERS.submit(ExecutionCallable(p, cmd))
+            return ProcessResult(cmd, p, futureReport)
+        } catch (e:UnrecognisedCmdException) {
+            val executionResult = object :ExecutionResult {
+                override fun command() = cmd
+
+                override fun exitValue() = -1
+            }
+
+            val futureReport = object :Future<ExecutionResult> {
+                override fun cancel(mayInterruptIfRunning: Boolean) = true
+
+                override fun isCancelled() = true
+
+                override fun isDone() = true
+
+                override fun get(): ExecutionResult = executionResult
+
+                override fun get(timeout: Long, unit: TimeUnit): ExecutionResult = executionResult
+            }
+
+            return ProcessResult(cmd, null, futureReport)
+        }
     }
 
     @JvmOverloads

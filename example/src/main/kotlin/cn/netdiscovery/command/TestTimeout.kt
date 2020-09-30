@@ -14,15 +14,11 @@ fun main() {
 
     val cmd = CommandBuilder("ping").addArg("baidu.com").build()
 
-    try {
-        CommandExecutor.execute(cmd, null).getExecutionResult(5,TimeUnit.SECONDS).let {
+    CommandExecutor.execute(cmd, null).getExecutionResult(5,TimeUnit.SECONDS).let {
 
-            val commandLine = it.command().string()
-            val exitCode = it.exitValue()
+        val commandLine = it.command().string()
+        val exitCode = it.exitValue()
 
-            println("command line: $commandLine\nexecution finished with exit code: $exitCode\n\n")
-        }
-    } catch (e: UnrecognisedCmdException) {
-        System.err.println(e)
+        println("command line: $commandLine\nexecution finished with exit code: $exitCode\n\n")
     }
 }

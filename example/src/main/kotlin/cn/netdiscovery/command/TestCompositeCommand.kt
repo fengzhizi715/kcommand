@@ -12,22 +12,18 @@ fun main() {
 
     val cmd = CommandBuilder.buildCompositeCommand("ps aux | grep java")
 
-    try {
-        CommandExecutor.execute(cmd, null, object : Appender {
+    CommandExecutor.execute(cmd, null, object : Appender {
 
-            override fun appendStdText(text: String) {
-                println(text)
-            }
-
-            override fun appendErrText(text: String) {
-                System.err.println(text)
-            }
-        }).getExecutionResult().let {
-            val commandLine = cmd.string()
-            val exitCode = it.exitValue()
-            println("command line: $commandLine\nexecution finished with exit code: $exitCode\n\n")
+        override fun appendStdText(text: String) {
+            println(text)
         }
-    } catch (e: UnrecognisedCmdException) {
-        System.err.println(e)
+
+        override fun appendErrText(text: String) {
+            System.err.println(text)
+        }
+    }).getExecutionResult().let {
+        val commandLine = cmd.string()
+        val exitCode = it.exitValue()
+        println("command line: $commandLine\nexecution finished with exit code: $exitCode\n\n")
     }
 }
