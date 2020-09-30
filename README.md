@@ -79,7 +79,7 @@ CommandExecutor 的 execute() 会返回 ProcessResult 对象。
     }
 ```
 
-### 获取返回结果
+### 命令执行的回调
 
 开发者可以使用 Append 在`回调`中获取命令执行的内容。
 
@@ -140,23 +140,10 @@ fun main() {
 ```kotlin
     val cmd = CommandBuilder.buildSudoCommand("xxx","dmidecode")
 
-    try {
-        CommandExecutor.execute(cmd, null, object : Appender {
-
-            override fun appendStdText(text: String) {
-                println(text)
-            }
-
-            override fun appendErrText(text: String) {
-                System.err.println(text)
-            }
-        }).getExecutionResult().let {
-            val commandLine = cmd.string()
-            val exitCode = it.exitValue()
-            println("command line: $commandLine\nexecution finished with exit code: $exitCode\n\n")
-        }
-    } catch (e: UnrecognisedCmdException) {
-        System.err.println(e)
+    CommandExecutor.execute(cmd).getExecutionResult().let {
+        val commandLine = cmd.string()
+        val exitCode = it.exitValue()
+        println("command line: $commandLine\nexecution finished with exit code: $exitCode\n\n")
     }
 ```
 
@@ -167,15 +154,11 @@ fun main() {
 ```kotlin
     val cmd = CommandBuilder.buildCompositeCommand("ps aux | grep java")
 
-    try {
-        val executionResult = CommandExecutor.execute(cmd, null).asCompletableFuture().get()
+    val executionResult = CommandExecutor.execute(cmd).asCompletableFuture().get()
 
-        val commandLine = cmd.string()
-        val exitCode = executionResult.exitValue()
-        println("command line: $commandLine\nexecution finished with exit code: $exitCode\n\n")
-    } catch (e: UnrecognisedCmdException) {
-        System.err.println(e)
-    }
+    val commandLine = cmd.string()
+    val exitCode = executionResult.exitValue()
+    println("command line: $commandLine\nexecution finished with exit code: $exitCode\n\n")
 ```
 
 ### 支持 RxJava 
@@ -185,30 +168,14 @@ fun main() {
 ```kotlin
     val cmd = CommandBuilder.buildCompositeCommand("ps aux | grep java")
 
-    val eop = ExecutionOutputPrinter(object : Appender {
+    CommandExecutor.execute(cmd)
+        .asObservable()
+        .subscribe {
 
-        override fun appendStdText(text: String) {
-            println(text)
+            val commandLine = cmd.string()
+            val exitCode = it.exitValue()
+            println("command line: $commandLine\nexecution finished with exit code: $exitCode\n\n")
         }
-
-        override fun appendErrText(text: String) {
-            System.err.println(text)
-        }
-    })
-
-    try {
-        CommandExecutor.execute(cmd, null, eop)
-            .asObservable()
-            .subscribe {
-
-                val commandLine = cmd.string()
-                val exitCode = it.exitValue()
-                println("command line: $commandLine\nexecution finished with exit code: $exitCode\n\n")
-            }
-
-    } catch (e: UnrecognisedCmdException) {
-        System.err.println(e)
-    }
 ```
 
 ### 支持函数式
@@ -219,28 +186,13 @@ fun main() {
 ```kotlin
     val cmd = CommandBuilder.buildCompositeCommand("ps aux | grep java")
 
-    try {
-        val pResult = CommandExecutor.execute(cmd, null, object : Appender {
+    val result = CommandExecutor.execute(cmd).getResult().get()
 
-            override fun appendStdText(text: String) {
-                println(text)
-            }
+    if (result is ExecutionResult) {
 
-            override fun appendErrText(text: String) {
-                System.err.println(text)
-            }
-        })
-
-        val result = pResult.getResult().get()
-
-        if (result is ExecutionResult) {
-
-            val commandLine = cmd.string()
-            val exitCode = result.exitValue()
-            println("command line: $commandLine\nexecution finished with exit code: $exitCode\n\n")
-        }
-    } catch (e: UnrecognisedCmdException) {
-        System.err.println(e)
+        val commandLine = cmd.string()
+        val exitCode = result.exitValue()
+        println("command line: $commandLine\nexecution finished with exit code: $exitCode\n\n")
     }
 ```
 
@@ -254,18 +206,13 @@ fun main() = runBlocking{
 
     val cmd = CommandBuilder.buildCompositeCommand("ps aux | grep java")
 
-    try {
-        CommandExecutor.execute(cmd, null)
-            .asFlow()
-            .collect{
-                val commandLine = cmd.string()
-                val exitCode = it.exitValue()
-                println("command line: $commandLine\nexecution finished with exit code: $exitCode\n\n")
-            }
-
-    } catch (e: UnrecognisedCmdException) {
-        System.err.println(e)
-    }
+    CommandExecutor.execute(cmd)
+        .asFlow()
+        .collect{
+            val commandLine = cmd.string()
+            val exitCode = it.exitValue()
+            println("command line: $commandLine\nexecution finished with exit code: $exitCode\n\n")
+        }
 }
 ```
 
@@ -278,23 +225,21 @@ executeSync() 方法还支持超时机制，最后2个参数分别是超时的�
 ```kotlin
     val cmd = CommandBuilder("ping").addArg("baidu.com").build()
 
-    try {
-        CommandExecutor.executeSync(cmd, null,5, TimeUnit.SECONDS,object :Appender{
-            override fun appendStdText(text: String) {
-            }
-
-            override fun appendErrText(text: String) {
-            }
-
-        }).getExecutionResult().let {
-
-            val commandLine = it.command().string()
-            val exitCode = it.exitValue()
-
-            println("command line: $commandLine\nexecution finished with exit code: $exitCode\n\n")
+    CommandExecutor.executeSync(cmd, null,5, TimeUnit.SECONDS,object :Appender{
+        override fun appendStdText(text: String) {
+            println(text)
         }
-    } catch (e: UnrecognisedCmdException) {
-        System.err.println(e)
+
+        override fun appendErrText(text: String) {
+            System.err.println(text)
+        }
+
+    }).getExecutionResult().let {
+
+        val commandLine = it.command().string()
+        val exitCode = it.exitValue()
+
+        println("command line: $commandLine\nexecution finished with exit code: $exitCode\n\n")
     }
 ```
 
@@ -305,16 +250,12 @@ executeSync() 方法还支持超时机制，最后2个参数分别是超时的�
 ```kotlin
     val cmd = CommandBuilder("ping").addArg("baidu.com").build()
 
-    try {
-        CommandExecutor.execute(cmd, null).getExecutionResult(5,TimeUnit.SECONDS).let {
+    CommandExecutor.execute(cmd, null).getExecutionResult(5,TimeUnit.SECONDS).let {
 
-            val commandLine = it.command().string()
-            val exitCode = it.exitValue()
+        val commandLine = it.command().string()
+        val exitCode = it.exitValue()
 
-            println("command line: $commandLine\nexecution finished with exit code: $exitCode\n\n")
-        }
-    } catch (e: UnrecognisedCmdException) {
-        System.err.println(e)
+        println("command line: $commandLine\nexecution finished with exit code: $exitCode\n\n")
     }
 ```
 
