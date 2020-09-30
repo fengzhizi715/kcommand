@@ -15,20 +15,16 @@ public class TestSyncTimeout {
     public static void main(String[] args){
         Command cmd = new CommandBuilder("ping").addArg("baidu.com").build();
 
-        try {
-            CommandExecutor.executeSync(cmd, null, 5L, TimeUnit.SECONDS, new Appender() {
-                @Override
-                public void appendStdText(@NotNull String text) {
+        CommandExecutor.executeSync(cmd, null, 5L, TimeUnit.SECONDS, new Appender() {
+            @Override
+            public void appendStdText(@NotNull String text) {
 
-                }
+            }
 
-                @Override
-                public void appendErrText(@NotNull String text) {
+            @Override
+            public void appendErrText(@NotNull String text) {
 
-                }
-            }).getExecutionResult();
-        } catch (UnrecognisedCmdException e) {
-            System.err.println(e);
-        }
+            }
+        }).getExecutionResult();
     }
 }

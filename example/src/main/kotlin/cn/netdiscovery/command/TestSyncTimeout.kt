@@ -14,22 +14,20 @@ fun main() {
 
     val cmd = CommandBuilder("ping").addArg("baidu.com").build()
 
-    try {
-        CommandExecutor.executeSync(cmd, null,5, TimeUnit.SECONDS,object :Appender{
-            override fun appendStdText(text: String) {
-            }
-
-            override fun appendErrText(text: String) {
-            }
-
-        }).getExecutionResult().let {
-
-            val commandLine = it.command().string()
-            val exitCode = it.exitValue()
-
-            println("command line: $commandLine\nexecution finished with exit code: $exitCode\n\n")
+    CommandExecutor.executeSync(cmd, null,5, TimeUnit.SECONDS,object :Appender{
+        override fun appendStdText(text: String) {
+            println(text)
         }
-    } catch (e: UnrecognisedCmdException) {
-        System.err.println(e)
+
+        override fun appendErrText(text: String) {
+            System.err.println(text)
+        }
+
+    }).getExecutionResult().let {
+
+        val commandLine = it.command().string()
+        val exitCode = it.exitValue()
+
+        println("command line: $commandLine\nexecution finished with exit code: $exitCode\n\n")
     }
 }

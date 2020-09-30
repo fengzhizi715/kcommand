@@ -78,39 +78,62 @@ object CommandExecutor {
 
     @JvmOverloads
     @JvmStatic
-    @Throws(UnrecognisedCmdException::class)
     fun executeSync(cmd: Command, directory: File?=null, timeout:Long?=null,unit: TimeUnit?=null, appender: Appender): ProcessResult = executeSyncOutputPrinter(cmd, directory, timeout, unit, ExecutionOutputPrinter(appender))
 
     @JvmOverloads
     @JvmStatic
-    @Throws(UnrecognisedCmdException::class)
     fun executeSyncOutputPrinter(cmd: Command, directory: File?=null, timeout:Long?=null,unit: TimeUnit?=null, outputPrinter: ExecutionOutputPrinter = ExecutionOutputPrinter.DEFAULT_OUTPUT_PRINTER): ProcessResult {
-        val p = executeCommand(cmd, directory)
 
-        val future1 = WORKERS.submit { outputPrinter.handleStdStream(p.inputStream) }
-        val future2 =  WORKERS.submit { outputPrinter.handleErrStream(p.errorStream) }
-        val futureReport = WORKERS.submit(ExecutionCallable(p, cmd))
+        try {
+            val p = executeCommand(cmd, directory)
 
-        if (timeout!=null && unit!=null) {
-            try {
-                futureReport.get(timeout,unit)
-                future1.get(timeout,unit)
-                future2.get(timeout,unit)
-            } catch (e:Exception) {
-                p.destroyForcibly()
+            val future1 = WORKERS.submit { outputPrinter.handleStdStream(p.inputStream) }
+            val future2 =  WORKERS.submit { outputPrinter.handleErrStream(p.errorStream) }
+            val futureReport = WORKERS.submit(ExecutionCallable(p, cmd))
+
+            if (timeout!=null && unit!=null) {
                 try {
-                    p.waitFor()
-                } catch (e: InterruptedException) {
-                    //do nothing.
+                    futureReport.get(timeout,unit)
+                    future1.get(timeout,unit)
+                    future2.get(timeout,unit)
+                } catch (e:Exception) {
+                    p.destroyForcibly()
+                    try {
+                        p.waitFor()
+                    } catch (e: InterruptedException) {
+                        //do nothing.
+                    }
                 }
+            } else {
+                futureReport.get()
+                future1.get()
+                future2.get()
             }
-        } else {
-            futureReport.get()
-            future1.get()
-            future2.get()
-        }
 
-        return ProcessResult(cmd, p, futureReport)
+            return ProcessResult(cmd, p, futureReport)
+        } catch (e:UnrecognisedCmdException) {
+            WORKERS.execute { outputPrinter.handleErrMessage(e.toString()) }
+
+            val executionResult = object :ExecutionResult {
+                override fun command() = cmd
+
+                override fun exitValue() = -1
+            }
+
+            val futureReport = object :Future<ExecutionResult> {
+                override fun cancel(mayInterruptIfRunning: Boolean) = true
+
+                override fun isCancelled() = true
+
+                override fun isDone() = true
+
+                override fun get(): ExecutionResult = executionResult
+
+                override fun get(timeout: Long, unit: TimeUnit): ExecutionResult = executionResult
+            }
+
+            return ProcessResult(cmd, null, futureReport)
+        }
     }
 
     @Throws(UnrecognisedCmdException::class)
