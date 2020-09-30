@@ -52,27 +52,7 @@ object CommandExecutor {
             return ProcessResult(cmd, p, futureReport)
         } catch (e:UnrecognisedCmdException) {
 
-            WORKERS.execute { outputPrinter.handleErrMessage(e.toString()) }
-
-            val executionResult = object :ExecutionResult {
-                override fun command() = cmd
-
-                override fun exitValue() = -1
-            }
-
-            val futureReport = object :Future<ExecutionResult> {
-                override fun cancel(mayInterruptIfRunning: Boolean) = true
-
-                override fun isCancelled() = true
-
-                override fun isDone() = true
-
-                override fun get(): ExecutionResult = executionResult
-
-                override fun get(timeout: Long, unit: TimeUnit): ExecutionResult = executionResult
-            }
-
-            return ProcessResult(cmd, null, futureReport)
+            return nullableProcessResult(cmd,e,outputPrinter)
         }
     }
 
@@ -112,27 +92,8 @@ object CommandExecutor {
 
             return ProcessResult(cmd, p, futureReport)
         } catch (e:UnrecognisedCmdException) {
-            WORKERS.execute { outputPrinter.handleErrMessage(e.toString()) }
 
-            val executionResult = object :ExecutionResult {
-                override fun command() = cmd
-
-                override fun exitValue() = -1
-            }
-
-            val futureReport = object :Future<ExecutionResult> {
-                override fun cancel(mayInterruptIfRunning: Boolean) = true
-
-                override fun isCancelled() = true
-
-                override fun isDone() = true
-
-                override fun get(): ExecutionResult = executionResult
-
-                override fun get(timeout: Long, unit: TimeUnit): ExecutionResult = executionResult
-            }
-
-            return ProcessResult(cmd, null, futureReport)
+            return nullableProcessResult(cmd,e,outputPrinter)
         }
     }
 
@@ -147,6 +108,31 @@ object CommandExecutor {
                 throw UnrecognisedCmdException(cmd.string())
             }
         }
+    }
+
+    private fun nullableProcessResult(cmd: Command, e:UnrecognisedCmdException, outputPrinter: ExecutionOutputPrinter):ProcessResult {
+
+        WORKERS.execute { outputPrinter.handleErrMessage(e.toString()) }
+
+        val executionResult = object :ExecutionResult {
+            override fun command() = cmd
+
+            override fun exitValue() = -1
+        }
+
+        val futureReport = object :Future<ExecutionResult> {
+            override fun cancel(mayInterruptIfRunning: Boolean) = true
+
+            override fun isCancelled() = true
+
+            override fun isDone() = true
+
+            override fun get(): ExecutionResult = executionResult
+
+            override fun get(timeout: Long, unit: TimeUnit): ExecutionResult = executionResult
+        }
+
+        return ProcessResult(cmd, null, futureReport)
     }
 
     private fun recordOutput(p: Process, outputPrinter: ExecutionOutputPrinter) {
