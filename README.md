@@ -28,19 +28,19 @@ kcommand-coroutines|[ ![Download](https://api.bintray.com/packages/fengzhizi715/
 # 下载：
 
 ```groovy
-implementation 'cn.netdiscovery.kcommand:kcommand-core:1.2.6'
+implementation 'cn.netdiscovery.kcommand:kcommand-core:1.3.0'
 ```
 
 ```groovy
-implementation 'cn.netdiscovery.kcommand:kcommand-rxjava2:1.2.6'
+implementation 'cn.netdiscovery.kcommand:kcommand-rxjava2:1.3.0'
 ```
 
 ```groovy
-implementation 'cn.netdiscovery.kcommand:kcommand-rxjava3:1.2.6'
+implementation 'cn.netdiscovery.kcommand:kcommand-rxjava3:1.3.0'
 ```
 
 ```groovy
-implementation 'cn.netdiscovery.kcommand:kcommand-coroutines:1.2.6'
+implementation 'cn.netdiscovery.kcommand:kcommand-coroutines:1.3.0'
 ```
 
 # 使用：
@@ -52,18 +52,36 @@ implementation 'cn.netdiscovery.kcommand:kcommand-coroutines:1.2.6'
 然后，通过 CommandExecutor.execute() 执行命令。
 
 ```kotlin
-    val cmd = CommandBuilder("ping").addArg("baidu.com").build()
+    CommandExecutor.execute{
+        CommandBuilder("ping").addArg("baidu.com").build()
+    }
+```
 
-    try {
-        CommandExecutor.execute(cmd, null)
-    } catch (e: UnrecognisedCmdException) {
-        System.err.println(e)
+CommandExecutor 的 execute() 会返回 ProcessResult 对象。
+
+然后通过 ProcessResult 的 getExecutionResult() 获取命令执行的状态。
+
+```kotlin
+    CommandExecutor.execute {
+        val list = mutableListOf<String>()
+        list.add("sh")
+        list.add("-c")
+
+        val psCommand = "ps aux | grep java"
+
+        list.add(psCommand)
+
+        CommandBuilder.buildRawCommand(psCommand, list.toTypedArray())
+    }.getExecutionResult().let {
+        val commandLine = it.command().string()
+        val exitCode = it.exitValue()
+        println("command line: $commandLine\nexecution finished with exit code: $exitCode\n\n")
     }
 ```
 
 ### 获取返回结果
 
-可以使用 Append 在`回调`中获取命令执行的内容，使用`getExecutionResult()`判断命令的执行成功与否。
+开发者可以使用 Append 在`回调`中获取命令执行的内容。
 
 ```kotlin
 fun getPsCmd():Command {
@@ -82,23 +100,19 @@ fun main() {
 
     val cmd = getPsCmd()
 
-    try {
-        CommandExecutor.execute(cmd, null, object : Appender {
+    CommandExecutor.execute(cmd, null, object : Appender {
 
-            override fun appendStdText(text: String) {
-                println(text)
-            }
-
-            override fun appendErrText(text: String) {
-                System.err.println(text)
-            }
-        }).getExecutionResult().let {
-            val commandLine = cmd.string()
-            val exitCode = it.exitValue()
-            println("command line: $commandLine\nexecution finished with exit code: $exitCode\n\n")
+        override fun appendStdText(text: String) {
+            println(text)
         }
-    } catch (e: UnrecognisedCmdException) {
-        System.err.println(e)
+
+        override fun appendErrText(text: String) {
+            System.err.println(text)
+        }
+    }).getExecutionResult().let {
+        val commandLine = cmd.string()
+        val exitCode = it.exitValue()
+        println("command line: $commandLine\nexecution finished with exit code: $exitCode\n\n")
     }
 }
 ```
@@ -110,23 +124,10 @@ fun main() {
 ```kotlin
     val cmd = CommandBuilder.buildCompositeCommand("ps aux | grep java")
 
-    try {
-        CommandExecutor.execute(cmd, null, object : Appender {
-
-            override fun appendStdText(text: String) {
-                println(text)
-            }
-
-            override fun appendErrText(text: String) {
-                System.err.println(text)
-            }
-        }).getExecutionResult().let {
-            val commandLine = cmd.string()
-            val exitCode = it.exitValue()
-            println("command line: $commandLine\nexecution finished with exit code: $exitCode\n\n")
-        }
-    } catch (e: UnrecognisedCmdException) {
-        System.err.println(e)
+    CommandExecutor.execute(cmd).getExecutionResult().let {
+        val commandLine = cmd.string()
+        val exitCode = it.exitValue()
+        println("command line: $commandLine\nexecution finished with exit code: $exitCode\n\n")
     }
 ```
 
