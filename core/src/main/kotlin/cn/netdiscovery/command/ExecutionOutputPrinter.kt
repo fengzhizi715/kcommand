@@ -25,6 +25,10 @@ class ExecutionOutputPrinter(private val appender: Appender) {
         formatStream(errorStream, true)
     }
 
+    fun handleErrMessage(errorMsg: String) {
+        showOutputLine(errorMsg, true)
+    }
+
     private fun formatStream(inputStream: InputStream, isError: Boolean) {
         try {
             BufferedReader(InputStreamReader(inputStream)).use { br ->

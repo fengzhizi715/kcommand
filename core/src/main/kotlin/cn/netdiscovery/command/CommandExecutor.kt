@@ -51,6 +51,9 @@ object CommandExecutor {
             val futureReport = WORKERS.submit(ExecutionCallable(p, cmd))
             return ProcessResult(cmd, p, futureReport)
         } catch (e:UnrecognisedCmdException) {
+
+            WORKERS.execute { outputPrinter.handleErrMessage(e.toString()) }
+
             val executionResult = object :ExecutionResult {
                 override fun command() = cmd
 
