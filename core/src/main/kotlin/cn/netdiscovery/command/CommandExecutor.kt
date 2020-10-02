@@ -10,7 +10,7 @@ import java.util.concurrent.*
  *          cn.netdiscovery.command.CommandExecutor
  * @author: Tony Shen
  * @date: 2020-05-19 17:17
- * @version: V1.0 <描述当前版本功能>
+ * @version: V1.0 具体执行命令的类
  */
 object CommandExecutor {
 
@@ -19,7 +19,7 @@ object CommandExecutor {
     internal val NEW_LINE = System.getProperty("line.separator")
 
     /**
-     * 支持自定义线程池，通过这个线程池来执行命令
+     * 支持自定义线程池，通过该线程池来执行命令
      */
     @JvmStatic
     fun setWorkerExecutors(executorService: ExecutorService):CommandExecutor {

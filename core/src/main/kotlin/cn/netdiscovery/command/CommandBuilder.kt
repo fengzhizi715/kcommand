@@ -9,7 +9,7 @@ import java.util.regex.Pattern
  *          cn.netdiscovery.command.CommandBuilder
  * @author: Tony Shen
  * @date: 2020-05-19 17:03
- * @version: V1.0 <描述当前版本功能>
+ * @version: V1.0  构建命令的 Builder 类
  */
 class CommandBuilder() {
 
@@ -126,9 +126,15 @@ class CommandBuilder() {
             return strings.toTypedArray()
         }
 
+        /**
+         * 构建原始的命令
+         */
         @JvmStatic
         fun buildRawCommand(cmdLine: String): Command = buildRawCommand(cmdLine, splitCmd(cmdLine))
 
+        /**
+         * 构建原始的命令
+         */
         @JvmStatic
         fun buildRawCommand(cmd: cmdFunction): Command {
             val cmdLine = cmd.invoke()
@@ -142,14 +148,14 @@ class CommandBuilder() {
         fun buildRawCommand(cmdLine: String, cmdArray: Array<String>): Command = CommandImpl(cmdLine, cmdArray)
 
         /**
-         * 使用管理员账号执行该命令
+         * 构建使用管理员账号执行该命令
          */
         @JvmOverloads
         @JvmStatic
         fun buildSudoCommand(password:String = "", cmdLine:String): Command = buildRawCommand(cmdLine, sudoCommandArray(password,cmdLine))
 
         /**
-         * 使用管理员账号执行该命令
+         * 构建使用管理员账号执行该命令
          */
         @JvmOverloads
         @JvmStatic
@@ -159,13 +165,13 @@ class CommandBuilder() {
         }
 
         /**
-         * 便于执行一些复杂的 Linux 操作命令，例如使用管道命令
+         * 便于构建一些复杂的 Linux 操作命令，例如使用管道命令
          */
         @JvmStatic
         fun buildCompositeCommand(cmdLine: String): Command = buildRawCommand(cmdLine, compositeCommandArray(cmdLine))
 
         /**
-         * 便于执行一些复杂的 Linux 操作命令，例如使用管道命令
+         * 便于构建一些复杂的 Linux 操作命令，例如使用管道命令
          */
         @JvmStatic
         fun buildCompositeCommand(cmd:cmdFunction): Command {
@@ -174,13 +180,13 @@ class CommandBuilder() {
         }
 
         /**
-         * 执行 Windows 命令
+         * 构建 Windows 命令
          */
         @JvmStatic
         fun buildWindowsCommand(cmdLine: String): Command = buildRawCommand(cmdLine, windowsCommandArray(cmdLine))
 
         /**
-         * 执行 Windows 命令
+         * 构建 Windows 命令
          */
         @JvmStatic
         fun buildWindowsCommand(cmd:cmdFunction): Command {
