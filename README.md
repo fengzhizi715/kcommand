@@ -66,7 +66,7 @@ CommandExecutor 的 execute() 会返回 ProcessResult 对象。
 然后通过 ProcessResult 的 getExecutionResult() 获取命令执行的状态。
 
 ```kotlin
-    CommandExecutor.execute {
+    CommandExecutor.executeCmd {
         val list = mutableListOf<String>()
         list.add("sh")
         list.add("-c")
@@ -149,6 +149,14 @@ fun main() {
         val exitCode = it.exitValue()
         println("command line: $commandLine\nexecution finished with exit code: $exitCode\n\n")
     }
+```
+
+### 构建 Windows 命令
+
+通过使用 buildWindowsCommand() 方法构建 Command
+
+```kotlin
+    val cmd = CommandBuilder.buildWindowsCommand("dir")
 ```
 
 ### 支持 CompletableFuture
@@ -264,7 +272,6 @@ executeSync() 方法还支持超时机制，最后2个参数分别是超时的�
         println("command line: $commandLine\nexecution finished with exit code: $exitCode\n\n")
     }
 ```
-
 
 ## TODO List
 * 增加返回命令执行的内容
