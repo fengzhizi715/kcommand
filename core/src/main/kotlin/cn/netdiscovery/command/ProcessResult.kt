@@ -28,7 +28,7 @@ class ProcessResult(
      * 命令停止执行
      */
     fun abort(): Int {
-        if (process!=null) {
+        return if (process!=null) {
             if (isAlive()) {
                 process.destroyForcibly()
                 try {
@@ -37,9 +37,9 @@ class ProcessResult(
                     //do nothing.
                 }
             }
-            return process.exitValue()
+            process.exitValue()
         } else {
-            return -1;
+            -1
         }
     }
 

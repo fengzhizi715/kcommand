@@ -61,7 +61,8 @@ object CommandExecutor {
 
     @JvmOverloads
     @JvmStatic
-    fun executeSync(cmd: Command, directory: File?=null, timeout:Long?=null,unit: TimeUnit?=null, appender: Appender): ProcessResult = executeSyncOutputPrinter(cmd, directory, timeout, unit, ExecutionOutputPrinter(appender))
+    fun executeSync(cmd: Command, directory: File?=null, timeout:Long?=null,unit: TimeUnit?=null, appender: Appender): ProcessResult
+            = executeSyncOutputPrinter(cmd, directory, timeout, unit, ExecutionOutputPrinter(appender))
 
     @JvmOverloads
     @JvmStatic
