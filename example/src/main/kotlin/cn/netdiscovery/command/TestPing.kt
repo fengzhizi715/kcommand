@@ -10,7 +10,5 @@ package cn.netdiscovery.command
  */
 fun main() {
 
-    CommandExecutor.execute{
-        CommandBuilder("ping").addArg("baidu.com").build()
-    }
+    CommandExecutor.execute ("ping baidu.com")
 }

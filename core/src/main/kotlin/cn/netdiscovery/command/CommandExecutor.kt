@@ -28,7 +28,7 @@ object CommandExecutor {
     }
 
     @JvmStatic
-    fun execute(cmdLine: String): ProcessResult = execute(CommandBuilder.buildRawCommand(cmdLine), null )
+    fun execute(cmdLine: String): ProcessResult = execute(CommandBuilder.buildRawCommand(cmdLine))
 
     @JvmOverloads
     @JvmStatic
@@ -39,7 +39,10 @@ object CommandExecutor {
     fun execute(cmd: Command, directory: File?=null, appender: Appender): ProcessResult = execute(cmd, directory, ExecutionOutputPrinter(appender))
 
     @JvmStatic
-    inline fun execute(cmd: ()->Command): ProcessResult = execute(cmd.invoke())
+    inline fun execute(cmd: ()->String): ProcessResult = execute(cmd.invoke())
+
+    @JvmStatic
+    inline fun executeCmd(cmd: ()->Command): ProcessResult = execute(cmd.invoke())
 
     @JvmOverloads
     @JvmStatic

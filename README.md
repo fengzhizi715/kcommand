@@ -52,9 +52,13 @@ implementation 'cn.netdiscovery.kcommand:kcommand-coroutines:1.3.0'
 然后，通过 CommandExecutor.execute() 执行命令。
 
 ```kotlin
-    CommandExecutor.execute{
-        CommandBuilder("ping").addArg("baidu.com").build()
-    }
+    CommandExecutor.execute(CommandBuilder("ping").addArg("baidu.com").build())
+```
+
+更为简洁的写法：
+
+```kotlin
+    CommandExecutor.execute ("ping baidu.com")
 ```
 
 CommandExecutor 的 execute() 会返回 ProcessResult 对象。

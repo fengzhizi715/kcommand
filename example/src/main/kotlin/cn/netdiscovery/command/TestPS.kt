@@ -10,7 +10,7 @@ package cn.netdiscovery.command
  */
 fun main() {
 
-    CommandExecutor.execute {
+    CommandExecutor.executeCmd {
         val list = mutableListOf<String>()
         list.add("sh")
         list.add("-c")
