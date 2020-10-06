@@ -8,11 +8,11 @@ kcommand 是基于 Kotlin 特性实现的，执行 Linux/Windows 命令的库
 
 # 功能特点：
 
-* 简洁的命令执行工具
+* 简洁的命令执行方式
 * 支持命令执行的超时机制
 * 对 sudo 命令提供额外的支持
 * 支持函数式
-* 支持 RxJava 2、RxJava 3、CompletableFuture、Coroutines
+* 支持 CompletableFuture、RxJava 2、RxJava 3、Kotlin Coroutines
 
 
 # 最新版本
@@ -218,7 +218,9 @@ fun main() = runBlocking{
 
 ### 同步返回结果
 
-使用 CommandExecutor.executeSync() 支持同步返回结果，其实 kcommand 底层使用的是线程池，只是等待线程执行完成后将结果同步返回到 Append。 
+使用 CommandExecutor.executeSync() 支持同步返回结果。
+
+> 其实 kcommand 底层使用的是线程池，只是等待线程执行完成后将结果同步返回到 Append。 
 
 executeSync() 方法还支持超时机制，最后2个参数分别是超时的时间、时间的单位。
 
@@ -258,6 +260,11 @@ executeSync() 方法还支持超时机制，最后2个参数分别是超时的�
         println("command line: $commandLine\nexecution finished with exit code: $exitCode\n\n")
     }
 ```
+
+
+## TODO List
+* 增加返回命令执行的内容
+
 
 联系方式
 ===
