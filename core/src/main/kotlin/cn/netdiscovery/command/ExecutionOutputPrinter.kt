@@ -47,17 +47,18 @@ class ExecutionOutputPrinter(private val appender: Appender) {
         } else {
             sb?.let {
                 it.append(line).append("\r\n")
-                appender.appendStdText(line)
-            }?: appender.appendStdText(line)
+            }
+
+            appender.appendStdText(line)
         }
     }
 
     companion object {
 
         /**
-         * 默认输出的 Printer
+         * 默认的 Appender
          */
-        val DEFAULT_OUTPUT_PRINTER = ExecutionOutputPrinter(object : Appender {
+        val DEFAULT_APPENDER = object : Appender {
 
             override fun appendStdText(text: String) {
                 println(text)
@@ -66,7 +67,11 @@ class ExecutionOutputPrinter(private val appender: Appender) {
             override fun appendErrText(text: String) {
                 System.err.println(text)
             }
-        })
-    }
+        }
 
+        /**
+         * 默认输出的 Printer
+         */
+        val DEFAULT_OUTPUT_PRINTER = ExecutionOutputPrinter(DEFAULT_APPENDER)
+    }
 }
