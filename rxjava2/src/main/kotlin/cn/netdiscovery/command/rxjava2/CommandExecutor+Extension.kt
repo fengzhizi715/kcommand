@@ -23,11 +23,7 @@ fun CommandExecutor.getObservableWithSyncOutputPrinter(cmd: Command, directory: 
 
     val result = getStingWithSyncOutputPrinter(cmd,directory,timeout,unit,outputPrinter)
 
-    return if (result.isNullOrEmpty()) {
-        Observable.create { it.onNext("") }
-    } else {
-        Observable.create { it.onNext(result) }
-    }
+    return Observable.create{ it.onNext(result) }
 }
 
 fun CommandExecutor.getFlowableWithSync(cmd: Command, directory: File?=null, timeout:Long?=null, unit: TimeUnit?=null, appender: Appender): Flowable<String>
@@ -37,15 +33,9 @@ fun CommandExecutor.getFlowableWithSyncOutputPrinter(cmd: Command, directory: Fi
 
     val result = getStingWithSyncOutputPrinter(cmd,directory,timeout,unit,outputPrinter)
 
-    return if (result.isNullOrEmpty()) {
-        Flowable.create({
-            it.onNext("")
-        }, BackpressureStrategy.BUFFER)
-    } else {
-        Flowable.create({
-            it.onNext(result)
-        }, BackpressureStrategy.BUFFER)
-    }
+    return Flowable.create({
+        it.onNext(result)
+    }, BackpressureStrategy.BUFFER)
 }
 
 fun CommandExecutor.getSingleWithSync(cmd: Command, directory: File?=null, timeout:Long?=null, unit: TimeUnit?=null, appender: Appender): Single<String>
@@ -55,11 +45,7 @@ fun CommandExecutor.getSingleWithSyncOutputPrinter(cmd: Command, directory: File
 
     val result = getStingWithSyncOutputPrinter(cmd,directory,timeout,unit,outputPrinter)
 
-    return if (result.isNullOrEmpty()) {
-        Single.create { it.onSuccess("") }
-    } else {
-        Single.create { it.onSuccess(result) }
-    }
+    return Single.create{ it.onSuccess(result) }
 }
 
 fun CommandExecutor.getMaybeWithSync(cmd: Command, directory: File?=null, timeout:Long?=null, unit: TimeUnit?=null, appender: Appender): Maybe<String>
@@ -69,9 +55,5 @@ fun CommandExecutor.getMaybeWithSyncOutputPrinter(cmd: Command, directory: File?
 
     val result = getStingWithSyncOutputPrinter(cmd,directory,timeout,unit,outputPrinter)
 
-    return if (result.isNullOrEmpty()) {
-        Maybe.create { it.onSuccess("") }
-    } else {
-        Maybe.create { it.onSuccess(result) }
-    }
+    return Maybe.create{ it.onSuccess(result) }
 }
