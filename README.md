@@ -43,7 +43,7 @@ implementation 'cn.netdiscovery.kcommand:kcommand-rxjava3:1.3.0'
 implementation 'cn.netdiscovery.kcommand:kcommand-coroutines:1.3.0'
 ```
 
-# 使用：
+# kcommand 使用：
 
 ### 基本用法
 
@@ -58,12 +58,18 @@ implementation 'cn.netdiscovery.kcommand:kcommand-coroutines:1.3.0'
 更为简洁的写法：
 
 ```kotlin
-    CommandExecutor.execute ("ping baidu.com")
+    CommandExecutor.execute("ping baidu.com")
 ```
 
-CommandExecutor 的 execute() 会返回 ProcessResult 对象。
+或者：
 
-然后通过 ProcessResult 的 getExecutionResult() 获取命令执行的状态。
+```kotlin
+    CommandExecutor.execute{ "ping baidu.com" }
+```
+
+CommandExecutor 的 execute() 会返回 ProcessResult 对象。然后通过 ProcessResult 的 getExecutionResult() 获取命令执行的状态。
+
+例如：
 
 ```kotlin
     CommandExecutor.executeCmd {
@@ -123,7 +129,7 @@ fun main() {
 
 ### 使用复合命令
 
-可以使用 CommandBuilder.buildCompositeCommand() 构造所需的复合命令，例如管道命令等
+通过使用 CommandBuilder.buildCompositeCommand() 构造所需的复合命令，例如管道命令等
 
 ```kotlin
     val cmd = CommandBuilder.buildCompositeCommand("ps aux | grep java")
@@ -137,9 +143,9 @@ fun main() {
 
 ### 使用 sudo
 
-支持使用 sudo 命令执行一些管理员使用的命令。
+支持 sudo 命令执行一些 Linux 管理员使用的命令。
 
-通过使用 buildSudoCommand() 方法构建 Command，需要传递管理员的密码和执行的命令。
+通过使用 buildSudoCommand() 方法构建 Command，需要传递 Linux 管理员的密码和执行的命令。
 
 ```kotlin
     val cmd = CommandBuilder.buildSudoCommand("xxx","dmidecode")
@@ -161,7 +167,7 @@ fun main() {
 
 ### 支持 CompletableFuture
 
-通过 ProcessResult 的扩展函数`asCompletableFuture()`等，支持 CompletableFuture
+通过 ProcessResult 的扩展函数`asCompletableFuture()`等，返回 CompletableFuture 对象
 
 ```kotlin
     val cmd = CommandBuilder.buildCompositeCommand("ps aux | grep java")
@@ -211,7 +217,7 @@ fun main() {
 
 ### Coroutines
 
-通过 ProcessResult 的扩展函数`asFlow()`支持协程。
+通过 ProcessResult 的扩展函数`asFlow()`，返回 Flow 对象
 
 ```kotlin
 fun main() = runBlocking{
@@ -230,11 +236,11 @@ fun main() = runBlocking{
 
 ### 同步返回结果
 
-使用 CommandExecutor.executeSync() 支持同步返回结果。
+使用 CommandExecutor.executeSync() 支持`同步`返回结果。
 
-> 其实 kcommand 底层使用的是线程池，只是等待线程执行完成后将结果同步返回到 Append。 
+> 其实 kcommand 底层使用的是线程池，只是等待线程执行完成后将结果同步返回到 Append 。 
 
-executeSync() 方法还支持超时机制，最后2个参数分别是超时的时间、时间的单位。
+executeSync() 方法还支持超时机制，有2个参数分别表示超时的时间、时间的单位。
 
 ```kotlin
     val cmd = CommandBuilder("ping").addArg("baidu.com").build()
@@ -259,7 +265,8 @@ executeSync() 方法还支持超时机制，最后2个参数分别是超时的�
 
 ### 异步超时
 
-通过 getExecutionResult() 方法进行异步超时，该方法在调用 CommandExecutor.executeSync() 会无效。
+通过 getExecutionResult() 方法进行`异步`超时。
+> 该方法在调用 CommandExecutor.executeSync() 会无效。
 
 ```kotlin
     val cmd = CommandBuilder("ping").addArg("baidu.com").build()
