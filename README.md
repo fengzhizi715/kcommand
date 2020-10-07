@@ -234,9 +234,9 @@ fun main() = runBlocking{
 }
 ```
 
-### 同步返回结果
+### 同步执行
 
-使用 CommandExecutor.executeSync() 支持`同步`返回结果。
+使用 CommandExecutor.executeSync() 支持`同步`执行。
 
 > 其实 kcommand 底层使用的是线程池，只是等待线程执行完成后将结果同步返回到 Append 。 
 
@@ -278,6 +278,25 @@ executeSync() 方法还支持超时机制，有2个参数分别表示超时的�
 
         println("command line: $commandLine\nexecution finished with exit code: $exitCode\n\n")
     }
+```
+
+### 同步返回命令的执行结果
+
+通过 getStingWithSync() 方法会同步返回命令的执行结果。
+
+```kotlin
+    val cmd = CommandBuilder.buildCompositeCommand("ps aux | grep java")
+
+     val result = CommandExecutor.getStingWithSync(cmd, appender = object :Appender{
+        override fun appendStdText(text: String) {
+        }
+
+        override fun appendErrText(text: String) {
+            System.err.println(text)
+        }
+    })
+
+    println(result)
 ```
 
 
