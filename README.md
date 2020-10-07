@@ -28,19 +28,19 @@ kcommand-coroutines|[ ![Download](https://api.bintray.com/packages/fengzhizi715/
 # 下载：
 
 ```groovy
-implementation 'cn.netdiscovery.kcommand:kcommand-core:1.3.1'
+implementation 'cn.netdiscovery.kcommand:kcommand-core:1.3.2'
 ```
 
 ```groovy
-implementation 'cn.netdiscovery.kcommand:kcommand-rxjava2:1.3.1'
+implementation 'cn.netdiscovery.kcommand:kcommand-rxjava2:1.3.2'
 ```
 
 ```groovy
-implementation 'cn.netdiscovery.kcommand:kcommand-rxjava3:1.3.1'
+implementation 'cn.netdiscovery.kcommand:kcommand-rxjava3:1.3.2'
 ```
 
 ```groovy
-implementation 'cn.netdiscovery.kcommand:kcommand-coroutines:1.3.1'
+implementation 'cn.netdiscovery.kcommand:kcommand-coroutines:1.3.2'
 ```
 
 # kcommand 使用：
@@ -282,12 +282,12 @@ executeSync() 方法还支持超时机制，有2个参数分别表示超时的�
 
 ### 同步返回命令的执行结果
 
-通过 getStingWithSync() 方法会同步返回命令的执行结果。
+通过 getStringWithSync() 方法会同步返回命令的执行结果。
 
 ```kotlin
     val cmd = CommandBuilder.buildCompositeCommand("ps aux | grep java")
 
-     val result = CommandExecutor.getStingWithSync(cmd, appender = object :Appender{
+     val result = CommandExecutor.getStringWithSync(cmd, appender = object :Appender{
         override fun appendStdText(text: String) {
         }
 
