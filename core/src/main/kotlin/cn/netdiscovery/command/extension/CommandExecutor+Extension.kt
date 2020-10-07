@@ -1,0 +1,25 @@
+package cn.netdiscovery.command.extension
+
+import cn.netdiscovery.command.*
+import java.io.File
+import java.util.concurrent.CompletableFuture
+import java.util.concurrent.TimeUnit
+
+/**
+ *
+ * @FileName:
+ *          cn.netdiscovery.command.extension.`CommandExecutor+Extension`
+ * @author: Tony Shen
+ * @date: 2020-10-07 22:23
+ * @version: V1.0 <描述当前版本功能>
+ */
+fun CommandExecutor.getCompletableFutureWithSync(cmd: Command, directory: File?=null, timeout:Long?=null, unit: TimeUnit?=null, appender: Appender): CompletableFuture<String>
+        = getCompletableFutureWithSyncOutputPrinter(cmd, directory, timeout, unit, ExecutionOutputPrinter(appender))
+
+fun CommandExecutor.getCompletableFutureWithSyncOutputPrinter(cmd: Command, directory: File?=null, timeout:Long?=null, unit: TimeUnit?=null, outputPrinter: ExecutionOutputPrinter = ExecutionOutputPrinter.DEFAULT_OUTPUT_PRINTER): CompletableFuture<String> {
+
+    return CompletableFuture<String>().apply {
+        val result = getStingWithSyncOutputPrinter(cmd,directory,timeout,unit,outputPrinter)
+        this.complete(result)
+    }
+}
