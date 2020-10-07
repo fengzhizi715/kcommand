@@ -299,6 +299,7 @@ executeSync() 方法还支持超时机制，有2个参数分别表示超时的�
     println(result)
 ```
 
+> CommandExecutor 也有多个类似的扩展函数。
 
 联系方式
 ===
