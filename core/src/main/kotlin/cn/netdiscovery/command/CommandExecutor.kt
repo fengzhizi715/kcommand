@@ -103,12 +103,12 @@ object CommandExecutor {
 
     @JvmOverloads
     @JvmStatic
-    fun getStingWithSync(cmd: Command, directory: File?=null, timeout:Long?=null,unit: TimeUnit?=null, appender: Appender): String
-            = getStingWithSyncOutputPrinter(cmd, directory, timeout, unit, ExecutionOutputPrinter(appender))
+    fun getStringWithSync(cmd: Command, directory: File?=null, timeout:Long?=null,unit: TimeUnit?=null, appender: Appender): String
+            = getStringWithSyncOutputPrinter(cmd, directory, timeout, unit, ExecutionOutputPrinter(appender))
 
     @JvmOverloads
     @JvmStatic
-    fun getStingWithSyncOutputPrinter(cmd: Command, directory: File?=null, timeout:Long?=null,unit: TimeUnit?=null, outputPrinter: ExecutionOutputPrinter = ExecutionOutputPrinter.DEFAULT_OUTPUT_PRINTER): String {
+    fun getStringWithSyncOutputPrinter(cmd: Command, directory: File?=null, timeout:Long?=null,unit: TimeUnit?=null, outputPrinter: ExecutionOutputPrinter = ExecutionOutputPrinter.DEFAULT_OUTPUT_PRINTER): String {
 
         try {
             val p = executeCommand(cmd, directory)

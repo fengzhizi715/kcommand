@@ -19,7 +19,7 @@ fun CommandExecutor.getCompletableFutureWithSync(cmd: Command, directory: File?=
 fun CommandExecutor.getCompletableFutureWithSyncOutputPrinter(cmd: Command, directory: File?=null, timeout:Long?=null, unit: TimeUnit?=null, outputPrinter: ExecutionOutputPrinter = ExecutionOutputPrinter.DEFAULT_OUTPUT_PRINTER): CompletableFuture<String> {
 
     return CompletableFuture<String>().apply {
-        val result = getStingWithSyncOutputPrinter(cmd,directory,timeout,unit,outputPrinter)
+        val result = getStringWithSyncOutputPrinter(cmd,directory,timeout,unit,outputPrinter)
         this.complete(result)
     }
 }

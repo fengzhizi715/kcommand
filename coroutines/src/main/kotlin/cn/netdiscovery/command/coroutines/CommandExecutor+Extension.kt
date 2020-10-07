@@ -22,6 +22,6 @@ fun CommandExecutor.getFlowWithSync(cmd: Command, directory: File?=null, timeout
 
 fun CommandExecutor.getFlowWithSyncOutputPrinter(cmd: Command, directory: File?=null, timeout:Long?=null, unit: TimeUnit?=null, outputPrinter: ExecutionOutputPrinter = ExecutionOutputPrinter.DEFAULT_OUTPUT_PRINTER): Flow<String> {
 
-    val result = getStingWithSyncOutputPrinter(cmd,directory,timeout,unit,outputPrinter)
+    val result = getStringWithSyncOutputPrinter(cmd,directory,timeout,unit,outputPrinter)
     return flowOf( result )
 }
