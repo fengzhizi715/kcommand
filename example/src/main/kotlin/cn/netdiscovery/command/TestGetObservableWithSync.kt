@@ -21,7 +21,7 @@ fun main() {
         override fun appendErrText(text: String) {
         }
     })
-   .subscribe {
+   .subscribe{
        println(it)
    }
 }
