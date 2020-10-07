@@ -17,8 +17,8 @@ class ExecutionOutputPrinter(private val appender: Appender) {
 
     fun getAppender(): Appender = appender
 
-    fun handleStdStream(stdInputStream: InputStream) {
-        formatStream(stdInputStream, false)
+    fun handleStdStream(stdInputStream: InputStream, sb:StringBuilder? = null) {
+        formatStream(stdInputStream, false, sb)
     }
 
     fun handleErrStream(errorStream: InputStream) {
@@ -29,20 +29,27 @@ class ExecutionOutputPrinter(private val appender: Appender) {
         showOutputLine(errorMsg, true)
     }
 
-    private fun formatStream(inputStream: InputStream, isError: Boolean) {
+    private fun formatStream(inputStream: InputStream, isError: Boolean, sb:StringBuilder? = null) {
         try {
             BufferedReader(InputStreamReader(inputStream)).use { br ->
                 var line: String? = null
                 while (br.readLine().also { line = it } != null)
-                    showOutputLine(line!!, isError)
+                    showOutputLine(line!!, isError, sb)
             }
         } catch (e: IOException) {
             showOutputLine(e.fillInStackTrace().toString() + CommandExecutor.NEW_LINE, true)
         }
     }
 
-    private fun showOutputLine(line: String, isError: Boolean) {
-        if (isError) appender.appendErrText(line) else appender.appendStdText(line)
+    private fun showOutputLine(line: String, isError: Boolean, sb:StringBuilder? = null) {
+        if (isError) {
+            appender.appendErrText(line)
+        } else {
+            sb?.let {
+                it.append(line).append("\r\n")
+                appender.appendStdText(line)
+            }?: appender.appendStdText(line)
+        }
     }
 
     companion object {

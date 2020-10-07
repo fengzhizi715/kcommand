@@ -72,7 +72,7 @@ object CommandExecutor {
             val p = executeCommand(cmd, directory)
 
             val future1 = WORKERS.submit { outputPrinter.handleStdStream(p.inputStream) }
-            val future2 =  WORKERS.submit { outputPrinter.handleErrStream(p.errorStream) }
+            val future2 = WORKERS.submit { outputPrinter.handleErrStream(p.errorStream) }
             val futureReport = WORKERS.submit(ExecutionCallable(p, cmd))
 
             if (timeout!=null && unit!=null) {
@@ -98,6 +98,54 @@ object CommandExecutor {
         } catch (e:UnrecognisedCmdException) {
 
             return nullableProcessResult(cmd,e,outputPrinter)
+        }
+    }
+
+    @JvmOverloads
+    @JvmStatic
+    fun executeSyncWithString(cmd: Command, directory: File?=null, timeout:Long?=null,unit: TimeUnit?=null, appender: Appender): String
+            = executeSyncOutputPrinterWithString(cmd, directory, timeout, unit, ExecutionOutputPrinter(appender))
+
+    @JvmOverloads
+    @JvmStatic
+    fun executeSyncOutputPrinterWithString(cmd: Command, directory: File?=null, timeout:Long?=null,unit: TimeUnit?=null, outputPrinter: ExecutionOutputPrinter = ExecutionOutputPrinter.DEFAULT_OUTPUT_PRINTER): String {
+
+        try {
+            val p = executeCommand(cmd, directory)
+
+            val result = StringBuilder()
+
+            val future1 = WORKERS.submit { outputPrinter.handleStdStream(p.inputStream,result) }
+            val future2 = WORKERS.submit { outputPrinter.handleErrStream(p.errorStream) }
+            val futureReport = WORKERS.submit(ExecutionCallable(p, cmd))
+            var executionResult:ExecutionResult ?=null
+
+            if (timeout!=null && unit!=null) {
+                try {
+                    executionResult = futureReport.get(timeout,unit)
+                    future1.get(timeout,unit)
+                    future2.get(timeout,unit)
+                } catch (e:Exception) {
+                    p.destroyForcibly()
+                    try {
+                        p.waitFor()
+                    } catch (e: InterruptedException) {
+                        //do nothing.
+                    }
+                }
+            } else {
+                executionResult = futureReport.get()
+                future1.get()
+                future2.get()
+            }
+
+            return executionResult?.takeIf { it.exitValue() == 0 }?.let {
+                result.toString()
+            } ?: ""
+        } catch (e:UnrecognisedCmdException) {
+
+            WORKERS.execute { outputPrinter.handleErrMessage(e.toString()) }
+            return ""
         }
     }
 
