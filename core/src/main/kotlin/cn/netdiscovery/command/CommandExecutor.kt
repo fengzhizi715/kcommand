@@ -10,7 +10,7 @@ import java.util.concurrent.*
  *          cn.netdiscovery.command.CommandExecutor
  * @author: Tony Shen
  * @date: 2020-05-19 17:17
- * @version: V1.0 具体执行命令的类
+ * @since: V1.0 具体执行命令的类
  */
 object CommandExecutor {
 

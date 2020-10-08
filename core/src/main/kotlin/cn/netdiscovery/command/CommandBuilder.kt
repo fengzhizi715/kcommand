@@ -9,7 +9,7 @@ import java.util.regex.Pattern
  *          cn.netdiscovery.command.CommandBuilder
  * @author: Tony Shen
  * @date: 2020-05-19 17:03
- * @version: V1.0  构建命令的 Builder 类
+ * @since: V1.0  构建命令的 Builder 类
  */
 class CommandBuilder() {
 

@@ -15,7 +15,7 @@ import java.util.concurrent.TimeUnit
  *          cn.netdiscovery.command.coroutines.`CommandExecutor+Extension`
  * @author: Tony Shen
  * @date: 2020-10-07 22:00
- * @version: V1.0 <描述当前版本功能>
+ * @since: V1.3 <描述当前版本功能>
  */
 fun CommandExecutor.getFlowWithSync(cmd: Command, directory: File?=null, timeout:Long?=null, unit: TimeUnit?=null, appender: Appender): Flow<String>
         = getFlowWithSyncOutputPrinter(cmd, directory, timeout, unit, ExecutionOutputPrinter(appender))

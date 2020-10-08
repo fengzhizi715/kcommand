@@ -6,7 +6,7 @@ package cn.netdiscovery.command
  *          cn.netdiscovery.command.ExecutionReport
  * @author: Tony Shen
  * @date: 2020-05-19 16:54
- * @version: V1.0 命令的返回值，用于表示命令是否执行成功
+ * @since: V1.0 命令的返回值，用于表示命令是否执行成功
  */
 interface ExecutionResult {
 

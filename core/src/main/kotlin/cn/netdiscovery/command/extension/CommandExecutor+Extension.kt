@@ -11,7 +11,7 @@ import java.util.concurrent.TimeUnit
  *          cn.netdiscovery.command.extension.`CommandExecutor+Extension`
  * @author: Tony Shen
  * @date: 2020-10-07 22:23
- * @version: V1.0 <描述当前版本功能>
+ * @since: V1.3 <描述当前版本功能>
  */
 fun CommandExecutor.getCompletableFutureWithSync(cmd: Command, directory: File?=null, timeout:Long?=null, unit: TimeUnit?=null, appender: Appender): CompletableFuture<String>
         = getCompletableFutureWithSyncOutputPrinter(cmd, directory, timeout, unit, ExecutionOutputPrinter(appender))

@@ -11,7 +11,7 @@ import java.io.InputStreamReader
  *          cn.netdiscovery.command.ExecutionOutputPrinter
  * @author: Tony Shen
  * @date: 2020-05-19 17:54
- * @version: V1.0  对执行命令内容的打印
+ * @since: V1.0  对执行命令内容的打印
  */
 class ExecutionOutputPrinter(private val appender: Appender) {
 

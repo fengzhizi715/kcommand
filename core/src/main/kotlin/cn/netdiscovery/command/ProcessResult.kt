@@ -14,7 +14,7 @@ import java.util.concurrent.TimeoutException
  *          cn.netdiscovery.command.ProcessMonitor
  * @author: Tony Shen
  * @date: 2020-05-19 18:00
- * @version: V1.0 命令的执行结果，会返回 ExecutionResult
+ * @since: V1.0 命令的执行结果，会返回 ExecutionResult
  */
 class ProcessResult(
     private val cmd: Command,
