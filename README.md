@@ -285,7 +285,7 @@ executeSync() 方法还支持超时机制，有2个参数分别表示超时的�
 通过 getStringWithSync() 方法会同步返回命令的执行结果。
 
 ```kotlin
-    val cmd = CommandBuilder.buildCompositeCommand("ps aux | grep java")
+     val cmd = CommandBuilder.buildCompositeCommand("ps aux | grep java")
 
      val result = CommandExecutor.getStringWithSync(cmd, appender = object :Appender{
         override fun appendStdText(text: String) {
@@ -299,7 +299,7 @@ executeSync() 方法还支持超时机制，有2个参数分别表示超时的�
     println(result)
 ```
 
-> CommandExecutor 也有多个类似的扩展函数。
+> CommandExecutor 有多个类似 getStringWithSync() 的扩展函数。
 
 联系方式
 ===
