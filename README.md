@@ -28,19 +28,19 @@ kcommand-coroutines|[ ![Download](https://api.bintray.com/packages/fengzhizi715/
 # 下载：
 
 ```groovy
-implementation 'cn.netdiscovery.kcommand:kcommand-core:1.3.2'
+implementation 'cn.netdiscovery.kcommand:kcommand-core:1.3.3'
 ```
 
 ```groovy
-implementation 'cn.netdiscovery.kcommand:kcommand-rxjava2:1.3.2'
+implementation 'cn.netdiscovery.kcommand:kcommand-rxjava2:1.3.3'
 ```
 
 ```groovy
-implementation 'cn.netdiscovery.kcommand:kcommand-rxjava3:1.3.2'
+implementation 'cn.netdiscovery.kcommand:kcommand-rxjava3:1.3.3'
 ```
 
 ```groovy
-implementation 'cn.netdiscovery.kcommand:kcommand-coroutines:1.3.2'
+implementation 'cn.netdiscovery.kcommand:kcommand-coroutines:1.3.3'
 ```
 
 # kcommand 使用：
