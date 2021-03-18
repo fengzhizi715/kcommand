@@ -48,14 +48,13 @@ object CommandExecutor {
     @JvmStatic
     fun execute(cmd: Command, directory: File?=null, outputPrinter: ExecutionOutputPrinter = ExecutionOutputPrinter.DEFAULT_OUTPUT_PRINTER): ProcessResult {
 
-        try {
+        return try {
             val p = executeCommand(cmd, directory)
             recordOutput(p, outputPrinter)
             val futureReport = WORKERS.submit(ExecutionCallable(p, cmd))
-            return ProcessResult(cmd, p, futureReport)
+            ProcessResult(cmd, p, futureReport)
         } catch (e:UnrecognisedCmdException) {
-
-            return nullableProcessResult(cmd,e,outputPrinter)
+            nullableProcessResult(cmd,e,outputPrinter)
         }
     }
 
