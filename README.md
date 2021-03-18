@@ -40,7 +40,7 @@ implementation 'cn.netdiscovery.kcommand:kcommand-rxjava3:1.3.3'
 ```
 
 ```groovy
-implementation 'cn.netdiscovery.kcommand:kcommand-coroutines:1.3.3'
+implementation 'cn.netdiscovery.kcommand:kcommand-coroutines:1.3.3 '
 ```
 
 # kcommand 使用：
