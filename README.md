@@ -327,6 +327,10 @@ executeSync() 方法还支持超时机制，有2个参数分别表示超时的�
 
 > CommandExecutor 有多个类似 getStringWithSync() 的扩展函数。
 
+# TODO List
+
+* 增加日志的代理
+
 联系方式
 ===
 
