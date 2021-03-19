@@ -1,5 +1,6 @@
 package cn.netdiscovery.command
 
+import cn.netdiscovery.command.log.LogManager
 import java.util.*
 import java.util.regex.Pattern
 
@@ -11,12 +12,15 @@ import java.util.regex.Pattern
  * @date: 2020-05-19 17:03
  * @since: V1.0  构建命令的 Builder 类
  */
+const val TAG = "CommandBuilder"
+
 class CommandBuilder() {
 
     private var commandLine: String
     private val cmdArgs: ArrayList<String>
     private val cmdOptions: ArrayList<String>
     private val finalCommand: ArrayList<String>
+
 
     init {
         commandLine = EMPTY_STRING
@@ -105,7 +109,10 @@ class CommandBuilder() {
 
         override fun executable(): List<String> = executableCmd.asList()
 
-        override fun string(): String = cmdLine
+        override fun string(): String {
+            LogManager.i(TAG, "command line: $cmdLine")
+            return cmdLine
+        }
 
         override fun toString(): String = string()
     }
