@@ -196,6 +196,31 @@ fun main() {
         }
 ```
 
+或者
+
+```kotlin
+    val cmd = CommandBuilder.buildCompositeCommand("ps aux | grep java")
+
+    val sb = StringBuilder()
+
+    CommandExecutor.executeSync(cmd = cmd,appender = object : Appender{
+        override fun appendStdText(text: String) {
+            if (text.contains(cmd.string())) {
+                sb.append(text)
+            }
+        }
+
+        override fun appendErrText(text: String) {
+            TODO("Not yet implemented")
+        }
+
+    }).asObservable {
+        sb.toString()
+    }.subscribe {
+        println(it)
+    }
+```
+
 ### 支持函数式
 
 通过 ProcessResult 的`getResult()`返回的 [Result](https://github.com/fengzhizi715/Result) 支持函数式，
