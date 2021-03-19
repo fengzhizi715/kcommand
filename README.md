@@ -215,7 +215,7 @@ fun main() {
 ```
 
 
-### Coroutines
+### Kotlin Coroutines
 
 通过 ProcessResult 的扩展函数`asFlow()`，返回 Flow 对象
 
@@ -266,6 +266,7 @@ executeSync() 方法还支持超时机制，有2个参数分别表示超时的�
 ### 异步超时
 
 通过 getExecutionResult() 方法进行`异步`超时。
+
 > 该方法在调用 CommandExecutor.executeSync() 会无效。
 
 ```kotlin
@@ -280,7 +281,7 @@ executeSync() 方法还支持超时机制，有2个参数分别表示超时的�
     }
 ```
 
-### 同步返回命令的执行结果
+### 同步返回命令的执行结果(String 格式)
 
 通过 getStringWithSync() 方法会同步返回命令的执行结果。
 
