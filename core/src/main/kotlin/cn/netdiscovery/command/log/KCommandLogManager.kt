@@ -3,17 +3,17 @@ package cn.netdiscovery.command.log
 /**
  *
  * @FileName:
- *          cn.netdiscovery.http.interceptor.log.LogManager
+ *          cn.netdiscovery.http.interceptor.log.KCommandLogManager
  * @author: Tony Shen
  * @date: 2020-08-14 17:57
  * @version: V1.0 内部使用的日志操作
  */
-object LogManager {
+object KCommandLogManager {
 
     private var logProxy: LogProxy? = null
 
     fun logProxy(logProxy: LogProxy) {
-        LogManager.logProxy = logProxy
+        KCommandLogManager.logProxy = logProxy
     }
 
     fun e(tag:String , msg:String) {

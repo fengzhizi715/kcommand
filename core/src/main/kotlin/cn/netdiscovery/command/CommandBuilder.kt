@@ -1,6 +1,6 @@
 package cn.netdiscovery.command
 
-import cn.netdiscovery.command.log.LogManager
+import cn.netdiscovery.command.log.KCommandLogManager
 import java.util.*
 import java.util.regex.Pattern
 
@@ -110,7 +110,7 @@ class CommandBuilder() {
         override fun executable(): List<String> = executableCmd.asList()
 
         override fun string(): String {
-            LogManager.i(TAG, "command line: $cmdLine")
+            KCommandLogManager.i(TAG, "command line: $cmdLine")
             return cmdLine
         }
 
