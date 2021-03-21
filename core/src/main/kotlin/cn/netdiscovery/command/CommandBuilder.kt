@@ -107,12 +107,13 @@ class CommandBuilder() {
      */
     private class CommandImpl(private val cmdLine: String, private val executableCmd: Array<String>) : Command {
 
+        init {
+            KCommandLogManager.i(TAG, "command line: $cmdLine")
+        }
+
         override fun executable(): List<String> = executableCmd.asList()
 
-        override fun string(): String {
-            KCommandLogManager.i(TAG, "command line: $cmdLine")
-            return cmdLine
-        }
+        override fun string(): String = cmdLine
 
         override fun toString(): String = string()
     }

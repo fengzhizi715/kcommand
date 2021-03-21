@@ -28,19 +28,19 @@ kcommand-coroutines|[ ![Download](https://api.bintray.com/packages/fengzhizi715/
 # 下载：
 
 ```groovy
-implementation 'cn.netdiscovery.kcommand:kcommand-core:1.3.4'
+implementation 'cn.netdiscovery.kcommand:kcommand-core:1.3.5'
 ```
 
 ```groovy
-implementation 'cn.netdiscovery.kcommand:kcommand-rxjava2:1.3.4'
+implementation 'cn.netdiscovery.kcommand:kcommand-rxjava2:1.3.5'
 ```
 
 ```groovy
-implementation 'cn.netdiscovery.kcommand:kcommand-rxjava3:1.3.4'
+implementation 'cn.netdiscovery.kcommand:kcommand-rxjava3:1.3.5'
 ```
 
 ```groovy
-implementation 'cn.netdiscovery.kcommand:kcommand-coroutines:1.3.4 '
+implementation 'cn.netdiscovery.kcommand:kcommand-coroutines:1.3.5'
 ```
 
 # kcommand 使用：
@@ -326,10 +326,6 @@ executeSync() 方法还支持超时机制，有2个参数分别表示超时的�
 ```
 
 > CommandExecutor 有多个类似 getStringWithSync() 的扩展函数。
-
-# TODO List
-
-* 增加日志的代理
 
 联系方式
 ===
