@@ -19,28 +19,28 @@ kcommand 是基于 Kotlin 特性实现的，执行 Linux/Windows 命令的库
 
 模块|最新版本
 ---|:-------------:
-kcommand-core|[ ![Download](https://api.bintray.com/packages/fengzhizi715/maven/kcommand-core/images/download.svg) ](https://bintray.com/fengzhizi715/maven/kcommand-core/_latestVersion)
-kcommand-rxjava2|[ ![Download](https://api.bintray.com/packages/fengzhizi715/maven/kcommand-rxjava2/images/download.svg) ](https://bintray.com/fengzhizi715/maven/kcommand-rxjava2/_latestVersion)
-kcommand-rxjava3|[ ![Download](https://api.bintray.com/packages/fengzhizi715/maven/kcommand-rxjava3/images/download.svg) ](https://bintray.com/fengzhizi715/maven/kcommand-rxjava3/_latestVersion)
-kcommand-coroutines|[ ![Download](https://api.bintray.com/packages/fengzhizi715/maven/kcommand-coroutines/images/download.svg) ](https://bintray.com/fengzhizi715/maven/kcommand-coroutines/_latestVersion)
+kcommand-core|[![](https://jitpack.io/v/fengzhizi715/kcommand.svg)](https://jitpack.io/#fengzhizi715/kcommand)
+kcommand-rxjava2|[![](https://jitpack.io/v/fengzhizi715/kcommand.svg)](https://jitpack.io/#fengzhizi715/kcommand)
+kcommand-rxjava3|[![](https://jitpack.io/v/fengzhizi715/kcommand.svg)](https://jitpack.io/#fengzhizi715/kcommand)
+kcommand-coroutines|[![](https://jitpack.io/v/fengzhizi715/kcommand.svg)](https://jitpack.io/#fengzhizi715/kcommand)
 
 
 # 下载：
 
 ```groovy
-implementation 'cn.netdiscovery.kcommand:kcommand-core:1.3.5'
+implementation 'com.github.fengzhizi715.kcommand:core:v1.3.7'
 ```
 
 ```groovy
-implementation 'cn.netdiscovery.kcommand:kcommand-rxjava2:1.3.5'
+implementation 'com.github.fengzhizi715.kcommand:rxjava2:v1.3.7'
 ```
 
 ```groovy
-implementation 'cn.netdiscovery.kcommand:kcommand-rxjava3:1.3.5'
+implementation 'com.github.fengzhizi715.kcommand:rxjava3:v1.3.7'
 ```
 
 ```groovy
-implementation 'cn.netdiscovery.kcommand:kcommand-coroutines:1.3.5'
+implementation 'com.github.fengzhizi715.kcommand:coroutines:v1.3.7'
 ```
 
 # kcommand 使用：
