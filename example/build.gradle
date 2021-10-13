@@ -13,6 +13,7 @@ def libs = rootProject.ext.libraries // 库
 repositories {
     jcenter()
     mavenCentral()
+    maven { url 'https://jitpack.io' }
 }
 
 dependencies {
@@ -25,7 +26,7 @@ dependencies {
 
     implementation "io.reactivex.rxjava3:rxjava:${libs.rxjava}"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:${libs.kotlinx_coroutines_core}"
-    implementation "cn.netdiscovery.result:result:${libs.result}"
+    implementation "com.github.fengzhizi715:Result:${libs.result}"
 }
 
 compileKotlin {
