@@ -27,6 +27,17 @@ kcommand-coroutines|[![](https://jitpack.io/v/fengzhizi715/kcommand.svg)](https:
 
 # 下载：
 
+将它添加到项目的 root build.gradle 中：
+
+```groovy
+	allprojects {
+		repositories {
+			...
+			maven { url 'https://jitpack.io' }
+		}
+	}
+```
+
 ```groovy
 implementation 'com.github.fengzhizi715.kcommand:core:v1.3.7'
 ```
