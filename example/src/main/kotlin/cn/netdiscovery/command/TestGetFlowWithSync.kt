@@ -1,7 +1,6 @@
 package cn.netdiscovery.command
 
 import cn.netdiscovery.command.coroutines.getFlowWithSync
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.runBlocking
 
 /**
