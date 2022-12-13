@@ -35,11 +35,13 @@ object CommandExecutor {
 
     @JvmOverloads
     @JvmStatic
-    fun execute(cmdLine: String, directory: File?=null, appender: Appender): ProcessResult = execute(CommandBuilder.buildRawCommand(cmdLine), directory, ExecutionOutputPrinter(appender))
+    fun execute(cmdLine: String, directory: File?=null, charsetName:String = "UTF-8", appender: Appender): ProcessResult =
+        execute(CommandBuilder.buildRawCommand(cmdLine), directory, ExecutionOutputPrinter(appender,charsetName))
 
     @JvmOverloads
     @JvmStatic
-    fun execute(cmd: Command, directory: File?=null, appender: Appender): ProcessResult = execute(cmd, directory, ExecutionOutputPrinter(appender))
+    fun execute(cmd: Command, directory: File?=null, charsetName:String = "UTF-8", appender: Appender): ProcessResult =
+        execute(cmd, directory, ExecutionOutputPrinter(appender,charsetName))
 
     @JvmStatic
     inline fun executeCmd(cmd: ()->Command): ProcessResult = execute(cmd.invoke())
@@ -60,8 +62,8 @@ object CommandExecutor {
 
     @JvmOverloads
     @JvmStatic
-    fun executeSync(cmd: Command, directory: File?=null, timeout:Long?=null,unit: TimeUnit?=null, appender: Appender): ProcessResult
-            = executeSyncOutputPrinter(cmd, directory, timeout, unit, ExecutionOutputPrinter(appender))
+    fun executeSync(cmd: Command, directory: File?=null, timeout:Long?=null,unit: TimeUnit?=null, charsetName:String = "UTF-8", appender: Appender): ProcessResult
+            = executeSyncOutputPrinter(cmd, directory, timeout, unit, ExecutionOutputPrinter(appender,charsetName))
 
     @JvmOverloads
     @JvmStatic

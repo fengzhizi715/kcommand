@@ -14,7 +14,7 @@ fun main() {
 
     val cmd = CommandBuilder("ping").addArg("baidu.com").build()
 
-    CommandExecutor.executeSync(cmd, null,5, TimeUnit.SECONDS,object :Appender{
+    CommandExecutor.executeSync(cmd, null,5, TimeUnit.SECONDS, appender = object :Appender{
         override fun appendStdText(text: String) {
             println(text)
         }

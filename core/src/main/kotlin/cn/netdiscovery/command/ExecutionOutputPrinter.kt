@@ -13,7 +13,7 @@ import java.io.InputStreamReader
  * @date: 2020-05-19 17:54
  * @since: V1.0  对执行命令内容的打印
  */
-class ExecutionOutputPrinter(private val appender: Appender) {
+class ExecutionOutputPrinter(private val appender: Appender,private val charsetName:String = "UTF-8") {
 
     fun getAppender(): Appender = appender
 
@@ -31,7 +31,7 @@ class ExecutionOutputPrinter(private val appender: Appender) {
 
     private fun formatStream(inputStream: InputStream, isError: Boolean, sb:StringBuilder? = null) {
         try {
-            BufferedReader(InputStreamReader(inputStream)).use { br ->
+            BufferedReader(InputStreamReader(inputStream,charsetName)).use { br ->
                 var line: String? = null
                 while (br.readLine().also { line = it } != null)
                     showOutputLine(line!!, isError, sb)
