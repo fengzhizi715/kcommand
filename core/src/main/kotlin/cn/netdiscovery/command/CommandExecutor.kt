@@ -104,8 +104,8 @@ object CommandExecutor {
 
     @JvmOverloads
     @JvmStatic
-    fun getStringWithSync(cmd: Command, directory: File?=null, timeout:Long?=null,unit: TimeUnit?=null, appender: Appender): String
-            = getStringWithSyncOutputPrinter(cmd, directory, timeout, unit, ExecutionOutputPrinter(appender))
+    fun getStringWithSync(cmd: Command, directory: File?=null, timeout:Long?=null,unit: TimeUnit?=null, charsetName:String = "UTF-8", appender: Appender): String
+            = getStringWithSyncOutputPrinter(cmd, directory, timeout, unit, ExecutionOutputPrinter(appender,charsetName))
 
     @JvmOverloads
     @JvmStatic
