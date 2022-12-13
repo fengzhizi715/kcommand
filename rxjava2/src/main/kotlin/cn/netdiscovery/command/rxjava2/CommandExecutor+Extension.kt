@@ -16,8 +16,8 @@ import java.util.concurrent.TimeUnit
  * @date: 2020-10-07 21:54
  * @since: V1.3 <描述当前版本功能>
  */
-fun CommandExecutor.getObservableWithSync(cmd: Command, directory: File?=null, timeout:Long?=null, unit: TimeUnit?=null, appender: Appender): Observable<String>
-        = getObservableWithSyncOutputPrinter(cmd, directory, timeout, unit, ExecutionOutputPrinter(appender))
+fun CommandExecutor.getObservableWithSync(cmd: Command, directory: File?=null, timeout:Long?=null, unit: TimeUnit?=null, charsetName:String = "UTF-8", appender: Appender): Observable<String>
+        = getObservableWithSyncOutputPrinter(cmd, directory, timeout, unit, ExecutionOutputPrinter(appender,charsetName))
 
 fun CommandExecutor.getObservableWithSyncOutputPrinter(cmd: Command, directory: File?=null, timeout:Long?=null, unit: TimeUnit?=null, outputPrinter: ExecutionOutputPrinter = ExecutionOutputPrinter.DEFAULT_OUTPUT_PRINTER): Observable<String> {
 
@@ -26,8 +26,8 @@ fun CommandExecutor.getObservableWithSyncOutputPrinter(cmd: Command, directory: 
     return Observable.create{ it.onNext(result) }
 }
 
-fun CommandExecutor.getFlowableWithSync(cmd: Command, directory: File?=null, timeout:Long?=null, unit: TimeUnit?=null, appender: Appender): Flowable<String>
-        = getFlowableWithSyncOutputPrinter(cmd, directory, timeout, unit, ExecutionOutputPrinter(appender))
+fun CommandExecutor.getFlowableWithSync(cmd: Command, directory: File?=null, timeout:Long?=null, unit: TimeUnit?=null, charsetName:String = "UTF-8", appender: Appender): Flowable<String>
+        = getFlowableWithSyncOutputPrinter(cmd, directory, timeout, unit, ExecutionOutputPrinter(appender,charsetName))
 
 fun CommandExecutor.getFlowableWithSyncOutputPrinter(cmd: Command, directory: File?=null, timeout:Long?=null, unit: TimeUnit?=null, outputPrinter: ExecutionOutputPrinter = ExecutionOutputPrinter.DEFAULT_OUTPUT_PRINTER): Flowable<String> {
 
@@ -38,8 +38,8 @@ fun CommandExecutor.getFlowableWithSyncOutputPrinter(cmd: Command, directory: Fi
     }, BackpressureStrategy.BUFFER)
 }
 
-fun CommandExecutor.getSingleWithSync(cmd: Command, directory: File?=null, timeout:Long?=null, unit: TimeUnit?=null, appender: Appender): Single<String>
-        = getSingleWithSyncOutputPrinter(cmd, directory, timeout, unit, ExecutionOutputPrinter(appender))
+fun CommandExecutor.getSingleWithSync(cmd: Command, directory: File?=null, timeout:Long?=null, unit: TimeUnit?=null, charsetName:String = "UTF-8", appender: Appender): Single<String>
+        = getSingleWithSyncOutputPrinter(cmd, directory, timeout, unit, ExecutionOutputPrinter(appender,charsetName))
 
 fun CommandExecutor.getSingleWithSyncOutputPrinter(cmd: Command, directory: File?=null, timeout:Long?=null, unit: TimeUnit?=null, outputPrinter: ExecutionOutputPrinter = ExecutionOutputPrinter.DEFAULT_OUTPUT_PRINTER): Single<String> {
 
@@ -48,8 +48,8 @@ fun CommandExecutor.getSingleWithSyncOutputPrinter(cmd: Command, directory: File
     return Single.create{ it.onSuccess(result) }
 }
 
-fun CommandExecutor.getMaybeWithSync(cmd: Command, directory: File?=null, timeout:Long?=null, unit: TimeUnit?=null, appender: Appender): Maybe<String>
-        = getMaybeWithSyncOutputPrinter(cmd, directory, timeout, unit, ExecutionOutputPrinter(appender))
+fun CommandExecutor.getMaybeWithSync(cmd: Command, directory: File?=null, timeout:Long?=null, unit: TimeUnit?=null, charsetName:String = "UTF-8", appender: Appender): Maybe<String>
+        = getMaybeWithSyncOutputPrinter(cmd, directory, timeout, unit, ExecutionOutputPrinter(appender,charsetName))
 
 fun CommandExecutor.getMaybeWithSyncOutputPrinter(cmd: Command, directory: File?=null, timeout:Long?=null, unit: TimeUnit?=null, outputPrinter: ExecutionOutputPrinter = ExecutionOutputPrinter.DEFAULT_OUTPUT_PRINTER): Maybe<String> {
 
