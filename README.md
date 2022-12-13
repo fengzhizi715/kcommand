@@ -39,19 +39,19 @@ kcommand-coroutines|[![](https://jitpack.io/v/fengzhizi715/kcommand.svg)](https:
 ```
 
 ```groovy
-implementation 'com.github.fengzhizi715.kcommand:core:v1.3.7'
+implementation 'com.github.fengzhizi715.kcommand:core:v1.4.0'
 ```
 
 ```groovy
-implementation 'com.github.fengzhizi715.kcommand:rxjava2:v1.3.7'
+implementation 'com.github.fengzhizi715.kcommand:rxjava2:v1.4.0'
 ```
 
 ```groovy
-implementation 'com.github.fengzhizi715.kcommand:rxjava3:v1.3.7'
+implementation 'com.github.fengzhizi715.kcommand:rxjava3:v1.4.0'
 ```
 
 ```groovy
-implementation 'com.github.fengzhizi715.kcommand:coroutines:v1.3.7'
+implementation 'com.github.fengzhizi715.kcommand:coroutines:v1.4.0'
 ```
 
 # kcommand 使用：
@@ -121,7 +121,7 @@ fun main() {
 
     val cmd = getPsCmd()
 
-    CommandExecutor.execute(cmd, null, object : Appender {
+    CommandExecutor.execute(cmd, null, appender = object : Appender {
 
         override fun appendStdText(text: String) {
             println(text)
