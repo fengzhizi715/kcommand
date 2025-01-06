@@ -1,8 +1,5 @@
 package cn.netdiscovery.command
 
-
-import cn.netdiscovery.result.Result
-import cn.netdiscovery.result.resultFrom
 import java.util.concurrent.ExecutionException
 import java.util.concurrent.Future
 import java.util.concurrent.TimeUnit
@@ -73,7 +70,7 @@ class ProcessResult(
     /**
      * 返回命令的执行结果，使用 Result 进行封装。可以调用 Result.get() 来获取执行的值或者异常
      */
-    fun getResult():Result<ExecutionResult,Exception> = resultFrom {
+    fun getResult():Result<ExecutionResult> = runCatching {
         futureResult.get()
     }
 }

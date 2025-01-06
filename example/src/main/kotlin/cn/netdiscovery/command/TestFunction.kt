@@ -1,7 +1,5 @@
 package cn.netdiscovery.command
 
-import cn.netdiscovery.result.get
-
 /**
  *
  * @FileName:
@@ -14,7 +12,7 @@ fun main() {
 
     val cmd = CommandBuilder.buildCompositeCommand("ps aux | grep java")
 
-    val result = CommandExecutor.execute(cmd).getResult().get()
+    val result = CommandExecutor.execute(cmd).getResult().getOrNull()
 
     if (result is ExecutionResult) {
 
