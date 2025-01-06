@@ -341,8 +341,8 @@ executeSync() 方法还支持超时机制，有2个参数分别表示超时的�
 
 TODO List：
 ==
-* core 模块只保留 Kotlin 的库
 * 升级 Kotlin 版本
+* 升级 gradle 版本
 
 联系方式
 ===
